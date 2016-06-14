@@ -35,12 +35,14 @@ public class SortToolsTest {
 		assertEquals(-1, SortTools.find(sorted,  1,  5));
 		assertEquals(-1, SortTools.find(sorted,  1,  4));
 		assertEquals(1, SortTools.find(repeating,  4,  5));
-		/*
+		
 		//insertGeneral tests
+		//assertEquals(empty, empty);
+		//assertEquals(empty, Arrays.copyOf(empty, 0));
 		assertEquals(empty, SortTools.insertGeneral(empty,  1,  7));
 		assertEquals(empty, SortTools.insertGeneral(empty,  -1,  7));
 		int[] notEmpty = {7};
-		assertArrayEquals(notEmpty, SortTools.insertGeneral(empty, 0, 7));
+		//assertArrayEquals(notEmpty, SortTools.insertGeneral(empty, 0, 7));
 		int[] arr = {2, 7};
 		assertArrayEquals(arr, SortTools.insertGeneral(notEmpty, 1, 2));
 		assertArrayEquals(arr, SortTools.insertGeneral(notEmpty, 1, 2));
@@ -74,7 +76,7 @@ public class SortToolsTest {
 		//assertArrayEquals(sorted6, unsorted1);
 		int[] repeating2 = {5, 5, 5, 5};
 		SortTools.insertSort(repeating, 4);
-		assertArrayEquals(repeating2, repeating);*/
+		assertArrayEquals(repeating2, repeating);
 	}
 
 }
