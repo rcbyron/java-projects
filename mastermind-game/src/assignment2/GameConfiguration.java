@@ -3,7 +3,7 @@
  * rcb2746
  * <Student 2 Name>
  * <Student 2 EID>
- * https://github.com/rcbyron/java/mastermind-game
+ * https://github.com/rcbyron/java/tree/master/mastermind-game/src/assignment2
  * Slip days used: 0
  * Summer 2016
  */
