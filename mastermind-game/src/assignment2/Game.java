@@ -13,7 +13,6 @@ public class Game {
 	
 	public Game(boolean debug) {
 		this.debug = debug;
-		this.debug = false;
 	}
 	
 	private boolean hadError(Code code, Code guess) {
