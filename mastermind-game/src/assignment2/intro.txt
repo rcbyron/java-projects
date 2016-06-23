@@ -1,4 +1,5 @@
 Welcome to Mastermind.  Here are the rules.
+
 This is a text version of the classic board game Mastermind.
 The computer will think of a secret code. The code consists of 4
 colored pegs.
