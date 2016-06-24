@@ -3,6 +3,7 @@ package assignment2;
 import java.awt.Point;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -10,9 +11,12 @@ import java.util.Scanner;
 public class Game {
 
 	private boolean debug;
+	private ArrayList<String> history;
+	private Scanner sc;
 	
 	public Game(boolean debug) {
 		this.debug = debug;
+		sc = new Scanner(System.in);
 	}
 	
 	private boolean hadError(Code code, Code guess) {
@@ -28,31 +32,53 @@ public class Game {
 		
 		return false;
 	}
+
+	private void showHistory() {
+		System.out.println("\nHistory: ");
+		for (String item : history)
+			System.out.println(item);
+		System.out.println();
+	}
 	
 	private void runGame() {
-		Code code = new Code(GameConfiguration.pegNumber);
 		System.out.println("\nGenerating secret code ....\n");
-		boolean fail = false;
+		Code code = new Code(GameConfiguration.pegNumber);
+
+		boolean invalidInput = false;
+		history = new ArrayList<String>();
 		
 	    for (int i = GameConfiguration.guessNumber; i > 0; i--) {
 	    	if (debug)
-	    		System.out.println("\nSecret Code (debug mode): "+code+"\n");
-	    	if (!fail)
+	    		System.out.println("Secret Code (debug mode): "+code+"\n");
+	    	if (!invalidInput)
 	    		System.out.println("You have "+i+" guesses left.");
+	    	
 	    	System.out.println("What is your next guess?");
 	    	System.out.println("Type in the characters for your guess and press enter.");
 			System.out.print("Enter guess: ");
-		    Scanner sc = new Scanner(System.in);
 			String s = sc.nextLine();
+			
+			if (s.equalsIgnoreCase("history")) {
+				showHistory();
+				i++;
+				continue;
+			}
 			
 			Code guess = new Code(s);
 
-			fail = hadError(code, guess);
-			if (fail) {
+			invalidInput = hadError(code, guess);
+			if (invalidInput) {
 				System.out.println(guess + " ->  " + "INVALID GUESS\n");
 				i++;
 				continue;
 			}
+			
+			if (i <= 1) {
+				System.out.println("Sorry, you are out of guesses. You lose, boo-hoo.\n");
+				break;
+			}
+			
+			System.out.print("\n" + guess + " ->  " + "Result:  ");
 			
 			Point pegs = code.getPegs(guess);
 			String blackPegStr = pegs.x > 0 ? pegs.x + " black peg" : "no black pegs";
@@ -62,8 +88,19 @@ public class Game {
 			if (pegs.y > 1)
 				whitePegStr += "s";
 			
-			System.out.println("\n" + guess + " ->  " + "Result: " + blackPegStr + ", " + whitePegStr + "\n");
+			String result = "";
+			result = blackPegStr + ", " + whitePegStr;
+			
+			if (pegs.x == code.getCode().length)
+				result = "4 black pegs – You win!!";
+			
+			history.add(guess + "\t\t" + result);
+			System.out.println(result + "\n");
+			
+			if (pegs.x == code.getCode().length)
+				break;
 	    }
+
 	}
 	
 	public static void main(String[] args) {
@@ -76,13 +113,18 @@ public class Game {
 			
 			// Check if user is ready to play
 			System.out.print("\nYou have "+GameConfiguration.guessNumber+" to figure out the secret code or you lose the game.  Are you ready to play? (Y/N): ");
+
 			Scanner sc = new Scanner(System.in);
 			String s = sc.nextLine();
 			if (s.equalsIgnoreCase("y")) {
 				// Play the game
-				Game g = new Game(true);
-				g.runGame();
-				
+				while (s.equalsIgnoreCase("y")) {
+					Game g = new Game(true);
+					g.runGame();
+				    System.out.print("Are you ready for another game (Y/N): ");
+				    s = sc.nextLine();
+				}
+			    	
 				sc.close();
 			} else
 				System.exit(0);
