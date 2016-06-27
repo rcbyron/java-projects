@@ -1,4 +1,4 @@
-package assignment2;
+
 
 import java.awt.Point;
 import java.io.File;
@@ -92,7 +92,7 @@ public class Game {
 			result = blackPegStr + ", " + whitePegStr;
 			
 			if (pegs.x == code.getCode().length)
-				result = "4 black pegs – You win!!";
+				result = "4 black pegs -- You win!!";
 			
 			history.add(guess + "\t\t" + result);
 			System.out.println(result + "\n");
@@ -106,7 +106,7 @@ public class Game {
 	public static void main(String[] args) {
 		try {
 			// Print intro text
-			Scanner intro = new Scanner(new File("src/assignment2/intro.txt"));
+			Scanner intro = new Scanner(new File("src/intro.txt"));
 			while (intro.hasNextLine())
 				System.out.println(intro.nextLine());
 			intro.close();

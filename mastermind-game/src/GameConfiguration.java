@@ -8,7 +8,7 @@
  * Summer 2016
  */
 
-package assignment2;
+
 
 public class GameConfiguration {
 	public static final int guessNumber = 12;

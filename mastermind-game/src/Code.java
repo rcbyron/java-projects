@@ -1,4 +1,4 @@
-package assignment2;
+
 
 import java.awt.Point;
 import java.util.Random;
