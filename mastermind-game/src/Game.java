@@ -1,4 +1,12 @@
-
+/*  * EE422C Project 2 (Mastermind) submission by
+ * Robert (Connor) Byron
+ * rcb2746
+ * Haoran Niu
+ * hn4582
+ * https://github.com/rcbyron/java/tree/master/mastermind-game/src/assignment2
+ * Slip days used: 0
+ * Summer 2016
+ */
 
 import java.awt.Point;
 import java.io.File;
@@ -92,7 +100,7 @@ public class Game {
 			result = blackPegStr + ", " + whitePegStr;
 			
 			if (pegs.x == code.getCode().length)
-				result = "4 black pegs -- You win!!";
+				result = pegs.x +" black pegs -- You win!!";
 			
 			history.add(guess + "\t\t" + result);
 			System.out.println(result + "\n");
