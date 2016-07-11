@@ -108,6 +108,7 @@ public class Main {
 		String check_1;
 		String check_2;
 		int counter = 0;
+
 		while (itr.hasNext()) {
 			temp = itr.next();
 			for (int i = 0; i < temp.length(); i++) {
@@ -164,7 +165,7 @@ public class Main {
 				finals = (ArrayList<String>) tracker.get(i).clone();
 				System.out.println("Ladder contains " + tracker.get(i).size() + " words.");
 				for(int j = 0; j < tracker.get(i).size(); j++){
-					System.out.println(tracker.get(i).get(j));
+					System.out.println((tracker.get(i).get(j)).toLowerCase());
 				}
 			}
 		}
@@ -181,7 +182,10 @@ public class Main {
 		ArrayList<String> temp = new ArrayList<String>();
 		Queue<String> traverse = new LinkedList<String>();
 		String head;
-
+		
+		if(dict.contains(start) && dict.contains(end)){
+		start = start.toUpperCase();
+		end = end.toUpperCase();
 		nodes.add(start);
 		temp.add(start);
 		tracker.add(temp);
@@ -199,27 +203,12 @@ public class Main {
 				nodes.poll();
 			}
 		}
-
-		// for each node n in Graph:
-		// 4 n.distance = INFINITY
-		// 5 n.parent = NIL
-		// 6
-		// 7 create empty queue Q
-		// 8
-		// 9 root.distance = 0
-		// 10 Q.enqueue(root)
-		// 11
-		// 12 while Q is not empty:
-		// 13
-		// 14 current = Q.dequeue()
-		// 15
-		// 16 for each node n that is adjacent to current:
-		// 17 if n.distance == INFINITY:
-		// 18 n.distance = current.distance + 1
-		// 19 n.parent = current
-		// 20 Q.enqueue(n)
-
-		return null;// replace this line later with real return
+		return null;
+		
+		}else{
+			System.out.println("no word ladder can be found between " + start + " " + end);
+			return null;// replace this line later with real return
+		}
 	}
 
 	public static Set<String> makeDictionary() {
