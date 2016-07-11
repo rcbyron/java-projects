@@ -27,7 +27,7 @@ public class Main {
 		// System.out.println(kb.nextLine());
 		// }
 
-		getWordLadderBFS("STONE", "STONE");
+		getWordLadderBFS("aides", "anlas");
 	}
 
 	private static Set<String> getNeighbors(String word, Set<String> dict) {
@@ -157,15 +157,15 @@ public class Main {
 		return tracker;
 	}
 	
-	public static ArrayList<String> printResults(ArrayList<ArrayList<String>> tracker, String end){
+	public static ArrayList<String> printResults(ArrayList<ArrayList<String>> tracker, String start, String end){
 		ArrayList<String> finals = new ArrayList<String>();
 		
 		for(int i = 0; i < tracker.size(); i++){
 			if(tracker.get(i).contains(end)){
 				finals = (ArrayList<String>) tracker.get(i).clone();
-				System.out.println("Ladder contains " + tracker.get(i).size() + " words.");
+				System.out.println("a " + tracker.get(i).size() + "-rung word ladder exists between " + start.toLowerCase() + " and " + end.toLowerCase() + ".");
 				for(int j = 0; j < tracker.get(i).size(); j++){
-					System.out.println((tracker.get(i).get(j)).toLowerCase());
+					System.out.println("\t" + (tracker.get(i).get(j)).toLowerCase());
 				}
 			}
 		}
@@ -183,7 +183,7 @@ public class Main {
 		Queue<String> traverse = new LinkedList<String>();
 		String head;
 		
-		if(dict.contains(start) && dict.contains(end) && !(start.equals(end))){
+		if(dict.contains(start.toUpperCase()) && dict.contains(end.toUpperCase()) && !(start.equals(end))){
 		start = start.toUpperCase();
 		end = end.toUpperCase();
 		nodes.add(start);
@@ -196,7 +196,7 @@ public class Main {
 			tracker = addMatchesToTracker(matches, tracker, head);
 			visited.addAll(matches);
 			if (checkForMatch(matches, end)) {
-				matches = printResults(tracker, end);
+				matches = printResults(tracker, start, end);
 				return matches; 
 			}else{
 				traverse.add(nodes.peek());
@@ -207,7 +207,7 @@ public class Main {
 		
 		}else{
 
-			System.out.println("no word ladder can be found between " + start + " " + end);
+			System.out.println("no word ladder can be found between " + start.toLowerCase() + " " + end.toLowerCase());
 			return matches;// replace this line later with real return
 		}
 	}
