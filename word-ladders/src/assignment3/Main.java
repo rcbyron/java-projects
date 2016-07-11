@@ -1,9 +1,9 @@
 /* WORD LADDER Main.java
  * EE422C Project 3 submission by
  * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
+ * Zain Modi
+ * zam374
+ * 76550
  * <Student2 Name>
  * <Student2 EID>
  * <Student2 5-digit Unique No.>
@@ -20,14 +20,14 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-		Scanner kb = new Scanner(new File("src/short_dict.txt"));
+		Scanner kb = new Scanner(new File("src/assignment3/short_dict.txt"));
 		// System.out.println(getNeighbors("STONE", makeDictionary()));
 		// TODO methods to read in words, output ladder
 		// while (kb.hasNextLine()) {
 		// System.out.println(kb.nextLine());
 		// }
 
-		getWordLadderBFS("STONE", "MONEY");
+		getWordLadderBFS("STONE", "STONE");
 	}
 
 	private static Set<String> getNeighbors(String word, Set<String> dict) {
@@ -183,7 +183,7 @@ public class Main {
 		Queue<String> traverse = new LinkedList<String>();
 		String head;
 		
-		if(dict.contains(start) && dict.contains(end)){
+		if(dict.contains(start) && dict.contains(end) && !(start.equals(end))){
 		start = start.toUpperCase();
 		end = end.toUpperCase();
 		nodes.add(start);
@@ -206,8 +206,9 @@ public class Main {
 		return null;
 		
 		}else{
+
 			System.out.println("no word ladder can be found between " + start + " " + end);
-			return null;// replace this line later with real return
+			return matches;// replace this line later with real return
 		}
 	}
 
@@ -215,7 +216,7 @@ public class Main {
 		Set<String> words = new HashSet<String>();
 		Scanner infile = null;
 		try {
-			infile = new Scanner(new File("src/five_letter_words.txt"));
+			infile = new Scanner(new File("src/assignment3/five_letter_words.txt"));
 		} catch (FileNotFoundException e) {
 			System.out.println("Dictionary File not Found!");
 			e.printStackTrace();
