@@ -31,11 +31,12 @@ public class Main {
 			String token2 = sc.next();
 			
 			// Find and output word ladder
-			showWordLadder(getWordLadderDFS(token1, token2), token1, token2);	
+			showWordLadder(getWordLadderDFS(token1, token2), token1, token2);
 		}
 
 		sc.close();
 	}
+	
 	
 	private static void showWordLadder(ArrayList<String> wordLadder, String w1, String w2) {
 		w1 = w1.toLowerCase();
@@ -58,19 +59,48 @@ public class Main {
 		}
 	}
 	
+	/*
+	 * DFS Search - primary author: Robert (Connor) Byron, secondary author: Zain Modi
+	 */
+	
+	public static <K, V extends Comparable<V>> Map<K, V> sortByValues(final Map<K, V> map) {
+	    Comparator<K> valueComparator =  new Comparator<K>() {
+	        public int compare(K k1, K k2) {
+	            int compare = map.get(k2).compareTo(map.get(k1));
+	            if (compare == 0) return 1;
+	            else return compare;
+	        }
+	    };
+	    Map<K, V> sortedByValues = new TreeMap<K, V>(valueComparator);
+	    sortedByValues.putAll(map);
+	    return sortedByValues;
+	}
+	
 
-	private static ArrayList<String> getNeighbors(String word, Set<String> dict) {
-		ArrayList<String> neighbors = new ArrayList<String>();
+	private static Set<String> getNeighbors(String word, String goal, Set<String> dict) {
+		TreeMap<String, Integer> neighbors = new TreeMap<String, Integer>();
 		Iterator<String> iter = dict.iterator();
 		while (iter.hasNext()) {
 			String dictWord = iter.next();
+			dictWord = dictWord.toLowerCase();
 			for (int i = 0; i < word.length(); i++) {
 				if (word.substring(0, i).equalsIgnoreCase(dictWord.substring(0, i))
-				    && word.substring(i + 1).equalsIgnoreCase(dictWord.substring(i + 1)))
-					neighbors.add(dictWord);
+				    && word.substring(i + 1).equalsIgnoreCase(dictWord.substring(i + 1))) {
+					
+					// find word score
+					int score = 0;
+					char[] dictWordChars = dictWord.toCharArray();
+					char[] goalChars = goal.toCharArray();
+					for (int k = 0; k < dictWord.length(); k++) {
+						if (dictWordChars[k] == goalChars[k])
+							score++;
+					}
+					
+					neighbors.put(dictWord, score);
+				}
 			}
 		}
-		return neighbors;
+		return sortByValues(neighbors).keySet();
 	}
 	
 
@@ -78,7 +108,7 @@ public class Main {
 		visited.add(start);
 		if (start.equalsIgnoreCase(end))
 			return path;
-		for (String s : getNeighbors(start, dict)) {
+		for (String s : getNeighbors(start, end, dict)) {
 			if (!visited.contains(s)) {
 				path.add(s);
 				ArrayList<String> testPath = helperDFS(s, end, dict, visited, path);
@@ -94,7 +124,7 @@ public class Main {
 		start = start.toLowerCase();
 		end = end.toLowerCase();
 		Set<String> dict = makeDictionary();
-		if (start.equalsIgnoreCase(end) || !dict.contains(start) || !dict.contains(end))
+		if (start.equalsIgnoreCase(end) || !dict.contains(start.toUpperCase()) || !dict.contains(end.toUpperCase()))
 			return new ArrayList<String>();
 		
 		ArrayList<String> path = helperDFS(start, end, dict, new HashSet<String>(), new ArrayList<String>());
@@ -105,6 +135,10 @@ public class Main {
 		return path;
 	}
 
+/*
+ * BFS Search - primary author: Zain Modi, secondary author: Robert (Connor) Byron
+ */
+	
 	public static ArrayList<String> checkDupes(ArrayList<String> matches, ArrayList<String> visited) {
 		for (int i = 0; i < matches.size(); i++) {
 			if (visited.contains(matches.get(i))) {

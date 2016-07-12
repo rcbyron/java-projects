@@ -21,17 +21,20 @@ public class WordLadderTest {
 		assertEquals(Main.getWordLadderDFS("STONE", "STONE").size(), 0);
 		
 		// No ladder exists
-		assertEquals(Main.getWordLadderDFS("STONE", "BBBBB").size(), 0);
+		assertEquals(Main.getWordLadderBFS("SNEER", "GANJA").size(), 0);
 		
 		// 1 Word ladder exists
-		assertEquals(Main.getWordLadderDFS("STONE", "ATONE").size(), 1);
+		assertEquals(Main.getWordLadderDFS("STONE", "ATONE").size(), 2);
+		
+		// Ignore cases
+		assertEquals(Main.getWordLadderDFS("sToNe", "AtOnE").size(), 2);
 		
 		// Long ladder exists
 		ArrayList<String> ladder = Main.getWordLadderDFS("STONE", "MONEY");
 		assertEquals(ladder.size() != 0,       true);
-		assertEquals(ladder.contains("STONE"), true);
-		assertEquals(ladder.contains("STONY"), true);
-		assertEquals(ladder.contains("MONEY"), true);
+		assertEquals(ladder.contains("stone"), true);
+		assertEquals(ladder.contains("stony"), true);
+		assertEquals(ladder.contains("money"), true);
 		assertEquals(ladder.contains(""),      false);
 		assertEquals(ladder.contains(null),    false);
 		
@@ -48,17 +51,20 @@ public class WordLadderTest {
 		assertEquals(Main.getWordLadderBFS("ATONE", "ATONE").size(), 0);
 		
 		// No ladder exists
-		assertEquals(Main.getWordLadderBFS("ATONE", "BBBBB").size(), 0);
+		assertEquals(Main.getWordLadderBFS("SNEER", "GANJA").size(), 0);
 		
 		// 1 Word ladder exists
-		assertEquals(Main.getWordLadderBFS("ATONE", "STONE").size(), 1);
+		assertEquals(Main.getWordLadderBFS("ATONE", "STONE").size(), 2);
+	
+		// Ignore Cases
+		assertEquals(Main.getWordLadderBFS("AtOnE", "sToNe").size(), 2);
 		
 		// Long ladder exists
 		ArrayList<String> ladder = Main.getWordLadderDFS("STONE", "MONEY");
 		assertEquals(ladder.size() != 0,       true);
-		assertEquals(ladder.contains("STONE"), true);
-		assertEquals(ladder.contains("STONY"), true);
-		assertEquals(ladder.contains("MONEY"), true);
+		assertEquals(ladder.contains("stone"), true);
+		assertEquals(ladder.contains("stony"), true);
+		assertEquals(ladder.contains("money"), true);
 		assertEquals(ladder.contains(""),      false);
 		assertEquals(ladder.contains(null),    false);
 		
