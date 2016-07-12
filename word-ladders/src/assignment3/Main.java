@@ -1,13 +1,12 @@
 /* WORD LADDER Main.java
  * EE422C Project 3 submission by
- * Replace <...> with your actual data.
  * Zain Modi
  * zam374
  * 76550
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
- * Slip days used: <0>
+ * Robert (Connor) Byron
+ * rcb2746
+ * 76550
+ * Slip days used: 0
  * Fall 2015
  */
 
@@ -20,34 +19,64 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-		Scanner kb = new Scanner(new File("src/assignment3/short_dict.txt"));
-		// System.out.println(getNeighbors("STONE", makeDictionary()));
-		// TODO methods to read in words, output ladder
-		// while (kb.hasNextLine()) {
-		// System.out.println(kb.nextLine());
-		// }
+		Scanner sc = new Scanner(System.in);
+		
+		// Check for command
+		while (sc.hasNext()) {
+			String token1 = sc.next();
+			if (token1.charAt(0) == '/') {
+				runCommand(token1);
+				continue;
+			}
+			String token2 = sc.next();
+			
+			// Find and output word ladder
+			showWordLadder(getWordLadderDFS(token1, token2), token1, token2);	
+		}
 
-		getWordLadderBFS("aides", "anlas");
+		sc.close();
 	}
+	
+	private static void showWordLadder(ArrayList<String> wordLadder, String w1, String w2) {
+		w1 = w1.toLowerCase();
+		w2 = w2.toLowerCase();
+		if (wordLadder.size() == 0)
+			System.out.println("no word ladder can be found between "+w1+" and "+w2+".");
+		else {
+			System.out.println("a "+wordLadder.size()+"-rung word ladder exists between "+w1+" and "+w2+".");
+			for (String word : wordLadder)
+				System.out.println("\t"+word.toLowerCase());
+		}
+		
+	}
+	
+	
+	private static void runCommand(String cmd) {
+		switch(cmd.toLowerCase()) {
+		case "/quit": 	System.exit(0); break;
+		default: 		System.out.println("invalid command "+cmd);
+		}
+	}
+	
 
-	private static Set<String> getNeighbors(String word, Set<String> dict) {
-		Set<String> neighbors = new HashSet<String>();
+	private static ArrayList<String> getNeighbors(String word, Set<String> dict) {
+		ArrayList<String> neighbors = new ArrayList<String>();
 		Iterator<String> iter = dict.iterator();
 		while (iter.hasNext()) {
 			String dictWord = iter.next();
 			for (int i = 0; i < word.length(); i++) {
-				if (word.substring(0, i).equals(dictWord.substring(0, i))
-						&& word.substring(i + 1).equals(dictWord.substring(i + 1)))
+				if (word.substring(0, i).equalsIgnoreCase(dictWord.substring(0, i))
+				    && word.substring(i + 1).equalsIgnoreCase(dictWord.substring(i + 1)))
 					neighbors.add(dictWord);
 			}
 		}
 		return neighbors;
 	}
+	
 
-	private static ArrayList<String> helperDFS(String start, String end, Set<String> dict, Set<String> visited,
-			ArrayList<String> path) {
+	private static ArrayList<String> helperDFS(String start, String end, Set<String> dict, Set<String> visited, ArrayList<String> path) {
 		visited.add(start);
-		if (start.equals(end))
+		if (start.equalsIgnoreCase(end))
 			return path;
 		for (String s : getNeighbors(start, dict)) {
 			if (!visited.contains(s)) {
@@ -59,49 +88,34 @@ public class Main {
 		}
 		return null;
 	}
+	
 
 	public static ArrayList<String> getWordLadderDFS(String start, String end) {
-		if (start.equals(end))
-			return new ArrayList<String>();
+		start = start.toLowerCase();
+		end = end.toLowerCase();
 		Set<String> dict = makeDictionary();
+		if (start.equalsIgnoreCase(end) || !dict.contains(start) || !dict.contains(end))
+			return new ArrayList<String>();
+		
 		ArrayList<String> path = helperDFS(start, end, dict, new HashSet<String>(), new ArrayList<String>());
 		if (path == null)
-			path = new ArrayList<String>();
-		else
-			path.add(0, start);
+			return new ArrayList<String>();
+		
+		path.add(0, start);
 		return path;
 	}
 
-	public static boolean checkForMatch(ArrayList<String> matches, String end) {
-		Iterator<String> itrr = matches.iterator();
-		String temp;
-
-		while (itrr.hasNext()) {
-			temp = itrr.next();
-			if (temp.equals(end)) {
-				return true;
-			}
-		}
-		return false;
-
-	}
-
 	public static ArrayList<String> checkDupes(ArrayList<String> matches, ArrayList<String> visited) {
-		Iterator<String> itr = matches.iterator();
-		String next;
-
 		for (int i = 0; i < matches.size(); i++) {
 			if (visited.contains(matches.get(i))) {
 				matches.remove(i);
 				i--;
 			}
 		}
-
 		return matches;
 	}
 
 	public static ArrayList<String> findWord(String word, Set<String> dict, String end, ArrayList<String> visited) {
-
 		Iterator<String> itr = dict.iterator();
 		ArrayList<String> matches = new ArrayList<String>();
 		String temp;
@@ -130,9 +144,8 @@ public class Main {
 	}
 	public static Queue<String> addMatchesToQueue(Queue<String> nodes, ArrayList<String> matches){
 		Iterator<String> itr = matches.iterator();
-		while(itr.hasNext()){
+		while (itr.hasNext())
 			nodes.add(itr.next());
-		}
 		return nodes;
 	}
 
@@ -161,19 +174,12 @@ public class Main {
 		ArrayList<String> finals = new ArrayList<String>();
 		
 		for(int i = 0; i < tracker.size(); i++){
-			if(tracker.get(i).contains(end)){
+			if (tracker.get(i).contains(end))
 				finals = (ArrayList<String>) tracker.get(i).clone();
-				System.out.println("a " + tracker.get(i).size() + "-rung word ladder exists between " + start.toLowerCase() + " and " + end.toLowerCase() + ".");
-				for(int j = 0; j < tracker.get(i).size(); j++){
-					System.out.println("\t" + (tracker.get(i).get(j)).toLowerCase());
-				}
-			}
 		}
 		return finals;
 	}
 	public static ArrayList<String> getWordLadderBFS(String start, String end) {
-
-		// TODO some code
 		Set<String> dict = makeDictionary();
 		Queue<String> nodes = new LinkedList<String>();
 		ArrayList<String> visited = new ArrayList<String>();
@@ -183,7 +189,9 @@ public class Main {
 		Queue<String> traverse = new LinkedList<String>();
 		String head;
 		
-		if(dict.contains(start.toUpperCase()) && dict.contains(end.toUpperCase()) && !(start.equals(end))){
+		if(!dict.contains(start.toUpperCase()) || !dict.contains(end.toUpperCase()) || start.equals(end))
+			return new ArrayList<String>();
+		
 		start = start.toUpperCase();
 		end = end.toUpperCase();
 		nodes.add(start);
@@ -195,21 +203,15 @@ public class Main {
 			nodes = addMatchesToQueue(nodes, matches);
 			tracker = addMatchesToTracker(matches, tracker, head);
 			visited.addAll(matches);
-			if (checkForMatch(matches, end)) {
+			if (matches.contains(end)) {
 				matches = printResults(tracker, start, end);
 				return matches; 
-			}else{
+			} else {
 				traverse.add(nodes.peek());
 				nodes.poll();
 			}
 		}
-		return null;
-		
-		}else{
-
-			System.out.println("no word ladder can be found between " + start.toLowerCase() + " " + end.toLowerCase());
-			return matches;// replace this line later with real return
-		}
+		return new ArrayList<String>();
 	}
 
 	public static Set<String> makeDictionary() {
