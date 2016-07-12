@@ -108,6 +108,7 @@ public class Main {
 		visited.add(start);
 		if (start.equalsIgnoreCase(end))
 			return path;
+		if (path.size() > 2000) return null;
 		for (String s : getNeighbors(start, end, dict)) {
 			if (!visited.contains(s)) {
 				path.add(s);
@@ -252,9 +253,9 @@ public class Main {
 		Set<String> words = new HashSet<String>();
 		Scanner infile = null;
 		try {
-			infile = new Scanner(new File("src/assignment3/five_letter_words.txt"));
+			infile = new Scanner(new File("assignment3/five_letter_words.txt"));
 		} catch (FileNotFoundException e) {
-			System.out.println("Dictionary File not Found!");
+			System.out.println("Dictionary File not Found looking for assignment3/five_letter_words.txt. Make sure assignment3 is in the classpath!");
 			e.printStackTrace();
 			System.exit(1);
 		}
