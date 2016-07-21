@@ -29,7 +29,6 @@ public abstract class Critter {
 		rand = new java.util.Random(new_seed);
 	}
 	
-	
 	/* a one-character long string that visually depicts your critter in the ASCII interface */
 	public String toString() { return ""; }
 	
@@ -43,7 +42,12 @@ public abstract class Critter {
 	}
 	
 	protected final void run(int direction) {
-		
+	}
+	
+	private boolean moved; 
+	
+	private final boolean hasMoved() {
+		return moved; 
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
