@@ -51,6 +51,12 @@ public abstract class Critter {
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
+		if (energy < Params.min_reproduce_energy) { return; }
+		
+		offspring.energy = energy / 2; 
+		energy = energy % 2 == 0 ? energy / 2 : energy / 2 + 1; 
+		
+		//DIRECTION CONNOR PLS THX 
 	}
 
 	public abstract void doTimeStep();
