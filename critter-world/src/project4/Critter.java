@@ -12,7 +12,12 @@
  */
 package project4;
 
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
@@ -57,6 +62,23 @@ public abstract class Critter {
 		energy = energy % 2 == 0 ? energy / 2 : energy / 2 + 1; 
 		
 		//DIRECTION CONNOR PLS THX 
+	}
+	private static Map<Point, ArrayList<Critter>> world = new HashMap<Point, ArrayList<Critter>>();
+	
+	private static void doEncounters() {
+		for (ArrayList<Critter> spot : world.values()) {
+			//if coordinate occupied by more than one critter
+			if (spot.size() > 1) { 
+				Iterator<Critter> iter = spot.iterator();
+				while (!spot.isEmpty()) {
+					Critter crit1 = iter.next();
+					Critter crit2 = iter.next();
+					boolean fightMe = crit1.fight(crit2.toString());
+					boolean letsFight = crit2.fight(crit1.toString());
+				}
+			}
+			
+		}
 	}
 
 	public abstract void doTimeStep();

@@ -1,7 +1,6 @@
 package project4;
 
 public class Yale extends Critter {
-	private int dir = 0; 
 	
 	@Override
 	public String toString() { return "Y"; }
@@ -9,9 +8,7 @@ public class Yale extends Critter {
 	@Override
 	public void doTimeStep() {
 		//Patt only moves up 
-		dir = Critter.getRandomInt(2) + 1;  
-		walk(dir); 
-
+		walk(Critter.getRandomInt(2) + 1); 
 	}
 
 	@Override
