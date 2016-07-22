@@ -12,12 +12,14 @@
  */
 package project4;
 
+import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 public class Main {
 
-	public static void main(String[] args) throws InvalidCritterException, ClassNotFoundException {
+	public static void main(String[] args) throws InvalidCritterException, ClassNotFoundException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		Scanner sc = new Scanner(System.in);
 		System.out.print("critter> ");
 		while (sc.hasNextLine()) {
@@ -38,7 +40,8 @@ public class Main {
 						  	break;
 			case "stats": 	List<Critter> bugs = Critter.getInstances(cmd_args[1]);
 							Class<?> cls = Class.forName(cmd_args[1]);
-							((Critter)cls).runStats(bugs);
+							cls.getMethod("runStats", java.util.List.class).invoke(null, bugs);
+							break;
 							
 			}
 			System.out.print("critter> ");

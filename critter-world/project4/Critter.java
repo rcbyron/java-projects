@@ -183,12 +183,24 @@ public abstract class Critter {
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 		
 	public static void worldTimeStep() {
-		for (ArrayList<Critter> spot : world.values()) {
-			for (Critter bug : spot) {
-				bug.doTimeStep();
-				// Update world manually
-			}
-		}
+//		for (ArrayList<Critter> spot : world.values()) {
+//			for (Critter bug : spot) {
+//				bug.doTimeStep();
+//				// Update world manually
+//			}
+//		}
+//      0. timestep++;
+//		1. loop through all critters in collection, call doTimeStep for each
+//			i. walk/run 
+//			ii. energy deduction
+//			iii. reproduce but babies still in crib
+//			iv. cheat
+//		2. doEncounters()
+//			i. fight, square by square
+//		3. update rest energy
+//		4. add algae
+//		5. remove dead critters
+//		6. add babies to populations 
 	}
 	
 	public static void displayWorld() {
