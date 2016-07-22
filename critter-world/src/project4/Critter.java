@@ -67,15 +67,15 @@ public abstract class Critter {
 	
 	private static void doEncounters() {
 		for (ArrayList<Critter> spot : world.values()) {
+			Iterator<Critter> iter = spot.iterator();
 			//if coordinate occupied by more than one critter
-			if (spot.size() > 1) { 
-				Iterator<Critter> iter = spot.iterator();
-				while (!spot.isEmpty()) {
-					Critter crit1 = iter.next();
-					Critter crit2 = iter.next();
-					boolean fightMe = crit1.fight(crit2.toString());
-					boolean letsFight = crit2.fight(crit1.toString());
-				}
+			while (spot.size() > 1) { 
+				Critter crit1 = iter.next();
+				Critter crit2 = iter.next();
+				boolean fight1 = crit1.fight(crit2.toString());
+				boolean fight2 = crit2.fight(crit1.toString());
+				
+			
 			}
 			
 		}
