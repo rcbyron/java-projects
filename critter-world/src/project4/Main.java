@@ -19,6 +19,5 @@ public class Main {
 	public static void main(String[] args) {
 		CritterWorld cw = new CritterWorld();
 		cw.show();
-		//hi
 	}
 }
