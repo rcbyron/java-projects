@@ -14,10 +14,9 @@ public class Sanjay extends Critter {
 	}
 
 	@Override
-	public boolean fight(String oponent) {
-		if (Critter.getRandomInt(150) < 40 ) { 
-			return true; 
-		}
+	public boolean fight(String opponent) {
+		//Patt thinks CompArch > Solid State Electronics 
+		if (opponent.equals("Y")) { return true; }
 		return false;
 	}
 
