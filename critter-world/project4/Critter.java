@@ -16,6 +16,7 @@ import java.awt.Point;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -179,28 +180,55 @@ public abstract class Critter {
 		}
 	}
 	
-	private	static List<Critter> population = new java.util.ArrayList<Critter>();
+	//private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
-		
+	
+	private static void doEncounters() {
+	}
+	
+	private static int timestep = 0;
 	public static void worldTimeStep() {
-//		for (ArrayList<Critter> spot : world.values()) {
-//			for (Critter bug : spot) {
-//				bug.doTimeStep();
-//				// Update world manually
-//			}
-//		}
-//      0. timestep++;
-//		1. loop through all critters in collection, call doTimeStep for each
-//			i. walk/run 
-//			ii. energy deduction
-//			iii. reproduce but babies still in crib
-//			iv. cheat
-//		2. doEncounters()
-//			i. fight, square by square
-//		3. update rest energy
-//		4. add algae
-//		5. remove dead critters
-//		6. add babies to populations 
+		timestep++;
+		
+//		loop through all critters in collection, call doTimeStep for each
+//		i. walk/run 
+//		ii. energy deduction
+//		iii. reproduce but babies still in crib
+//		iv. cheat
+		for (ArrayList<Critter> spot : world.values())
+			for (Critter bug : spot)
+				bug.doTimeStep();
+
+		doEncounters();
+		
+		// Update rest energy
+		for (ArrayList<Critter> spot : world.values())
+			for (Critter bug : spot)
+				bug.energy -= Params.rest_energy_cost;
+		
+		// Add algae
+		try {
+			for (int i = 0; i < Params.refresh_algae_count; i++)
+				makeCritter("project4.Algae");
+		} catch (InvalidCritterException e) {
+			e.printStackTrace();
+		}
+		
+		// Remove dead critters
+		for (ArrayList<Critter> spot : world.values()) {
+			Iterator<Critter> iter = spot.iterator();
+			while (iter.hasNext()) {
+				Critter bug = iter.next();
+				if (bug.energy <= 0)
+					iter.remove();
+			}
+		}
+				
+		// Add babies to populations
+		for (Critter baby : babies) {
+			Point pos = new Point(baby.x_coord, baby.y_coord);
+			world.get(pos).add(baby);
+		}
 	}
 	
 	public static void displayWorld() {
