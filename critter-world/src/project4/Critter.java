@@ -25,6 +25,16 @@ import java.util.Map;
  */
 public abstract class Critter {
 	
+	private static final Point[] dirs = {
+			new Point(1, 0),
+			new Point(1, 1),
+			new Point(0, 1),
+			new Point(-1, 1),
+			new Point(-1, 0),
+			new Point(-1, -1),
+			new Point(0, -1)
+		};
+	
 	private static java.util.Random rand = new java.util.Random();
 	public static int getRandomInt(int max) {
 		return rand.nextInt(max);
@@ -43,11 +53,28 @@ public abstract class Critter {
 	private int x_coord;
 	private int y_coord;
 	
+    private void move(int direction) {
+    	int temp_x = (x_coord + dirs[direction].x) % Params.world_width;
+    	int temp_y = (y_coord + dirs[direction].y) % Params.world_height;
+    }
+	
 	protected final void walk(int direction) {
+		energy -= Params.walk_energy_cost;
+		if (energy >= 0)
+			move(direction);
+		else
+			energy = 0;
 	}
 	
 	protected final void run(int direction) {
-	}
+		energy -= Params.run_energy_cost;
+		if (energy >= 0) {
+			move(direction);
+			move(direction);
+		}
+		else
+			energy = 0;
+	}	
 	
 	private boolean moved; 
 	
@@ -67,20 +94,74 @@ public abstract class Critter {
 	
 	private static void doEncounters() {
 		for (ArrayList<Critter> spot : world.values()) {
-			Iterator<Critter> iter = spot.iterator();
 			//if coordinate occupied by more than one critter
 			while (spot.size() > 1) { 
-				Critter crit1 = iter.next();
-				Critter crit2 = iter.next();
-				boolean fight1 = crit1.fight(crit2.toString());
-				boolean fight2 = crit2.fight(crit1.toString());
+				Critter critA = spot.get(0);
+				Critter critB = spot.get(1);
+				Point fightPoint = new Point(critA.x_coord, critA.y_coord);
+				boolean fightA = critA.fight(critB.toString());
+				boolean fightB = critB.fight(critA.toString());
 				
-			
+				if (!fightA) { critA.tryToMove(); }
+				if (!fightB) { critB.tryToMove(); }
+				if (critA.energy <= 0 || critB.energy <= 0) {
+					if (critB.energy <= 0) { spot.remove(critB); }
+					if (critA.energy <= 0) { spot.remove(critA); }
+				} else if (critA.x_coord == fightPoint.x && critA.y_coord == fightPoint.y 
+					&& critB.x_coord == fightPoint.x && critB.y_coord == fightPoint.y) {
+					int rollA = getRandomInt(critA.energy);
+					int rollB = getRandomInt(critB.energy);
+					if (rollA > rollB) { 
+						critA.energy += .5 * critB.energy;
+						spot.remove(critB);
+					} else {
+						critB.energy += .5 * critA.energy;
+						spot.remove(critA);
+					}
+				}
 			}
-			
 		}
 	}
-
+	
+	private void tryToMove() {
+		if (!hasMoved()) {
+			int escapeDir = openAdjacentPoint(new Point(x_coord, y_coord));
+			if (escapeDir > -1 && escapeDir < 8) {
+				walk(escapeDir);
+			} else if(escapeDir > 8 && escapeDir < 16) {
+				run(escapeDir);
+			} else {
+				energy -= Params.walk_energy_cost;
+			}
+		} else {
+			energy -= Params.walk_energy_cost;
+		}
+	}
+	
+	/*
+	 * return 0-7 for direction of immediate open space
+	 * return 8-15 for direction of open space two spaces away
+	 */
+	private static int openAdjacentPoint(Point p){
+		for (int dir = 0; dir < 8; dir++) {
+			int temp_x = (p.x + dirs[dir].x) % Params.world_width;
+			int temp_y = (p.y + dirs[dir].y) % Params.world_height;
+			Point temp_p = new Point(temp_x, temp_y);
+			if (world.get(temp_p).size() == 0) {
+				return dir; 
+			}
+		}
+		for (int dir = 8; dir < 16; dir++) {
+			int temp_x = (p.x + 2 * dirs[dir].x) % Params.world_width;
+			int temp_y = (p.y + 2 * dirs[dir].y) % Params.world_height;
+			Point temp_p = new Point(temp_x, temp_y);
+			if (world.get(temp_p).size() == 0) {
+				return dir; 
+			}
+		}
+		return -1;
+	}
+	
 	public abstract void doTimeStep();
 	public abstract boolean fight(String oponent);
 	
