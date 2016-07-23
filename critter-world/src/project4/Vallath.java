@@ -9,6 +9,9 @@ public class Vallath extends Critter {
 	public void doTimeStep() {
 		//Nandakumar only walks in cardinal directions
 		walk(Critter.getRandomInt(3) * 2); 
+		Vallath child = new Vallath();
+		//Nandakumar's children are rebellious
+		reproduce(child, Critter.getRandomInt(3) * 2 + 1);
 	}
 
 	@Override

@@ -9,6 +9,9 @@ public class Yale extends Critter {
 	public void doTimeStep() {
 		//Patt only moves up 
 		walk(Critter.getRandomInt(2) + 1); 
+		Yale child = new Yale();
+		//Patt's children start by moving down 
+		reproduce(child, Critter.getRandomInt(2) + 5);
 	}
 
 	@Override

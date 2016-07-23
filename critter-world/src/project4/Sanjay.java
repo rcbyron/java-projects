@@ -10,6 +10,9 @@ public class Sanjay extends Critter {
 	public void doTimeStep() {
 		//Banerjee is always right
 		run(Critter.getRandomInt(2) - 1); 
+		Sanjay child = new Sanjay(); 
+		//Banerjee's kids love Beyonce (they move to the left) 
+		reproduce(child, Critter.getRandomInt(2) + 3);
 	}
 
 	@Override

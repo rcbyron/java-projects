@@ -9,6 +9,9 @@ public class Jon extends Critter {
 	public void doTimeStep() {
 		//Valvano walks around randomly
 		walk(Critter.getRandomInt(7));
+		Jon child = new Jon();
+		//like father like son
+		reproduce(child, Critter.getRandomInt(7));
 	}
 
 	@Override
