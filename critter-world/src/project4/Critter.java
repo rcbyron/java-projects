@@ -98,17 +98,18 @@ public abstract class Critter {
 			while (spot.size() > 1) { 
 				Critter critA = spot.get(0);
 				Critter critB = spot.get(1);
-				Point fightPoint = new Point(critA.x_coord, critA.y_coord);
+				Point fightPoint = new Point(critA.x_coord, critA.y_coord); //how do we know critA is actually at this point?
 				boolean fightA = critA.fight(critB.toString());
 				boolean fightB = critB.fight(critA.toString());
 				
-				if (!fightA) { critA.tryToMove(); }
-				if (!fightB) { critB.tryToMove(); }
+				if (!fightA) { critA.tryToEscape(); }
+				if (!fightB) { critB.tryToEscape(); }
 				if (critA.energy <= 0 || critB.energy <= 0) {
 					if (critB.energy <= 0) { spot.remove(critB); }
 					if (critA.energy <= 0) { spot.remove(critA); }
 				} else if (critA.x_coord == fightPoint.x && critA.y_coord == fightPoint.y 
 					&& critB.x_coord == fightPoint.x && critB.y_coord == fightPoint.y) {
+					//actually fight
 					int rollA = getRandomInt(critA.energy);
 					int rollB = getRandomInt(critB.energy);
 					if (rollA > rollB) { 
@@ -123,19 +124,15 @@ public abstract class Critter {
 		}
 	}
 	
-	private void tryToMove() {
-		if (!hasMoved()) {
-			int escapeDir = openAdjacentPoint(new Point(x_coord, y_coord));
-			if (escapeDir > -1 && escapeDir < 8) {
-				walk(escapeDir);
-			} else if(escapeDir > 8 && escapeDir < 16) {
-				run(escapeDir);
-			} else {
-				energy -= Params.walk_energy_cost;
-			}
-		} else {
-			energy -= Params.walk_energy_cost;
-		}
+	/*
+	 * if Critter has already moved or cannot find open space, deduct walking energy
+	 * else walk or run to open spot 
+	 */
+	private void tryToEscape() {
+		int escapeDir = openAdjacentPoint(new Point(x_coord, y_coord));
+		if (hasMoved() || escapeDir == -1) { energy -= Params.walk_energy_cost; } 
+		else if (escapeDir < 8) { walk(escapeDir); } 
+		else if(escapeDir < 16) { run(escapeDir); }
 	}
 	
 	/*
@@ -147,17 +144,13 @@ public abstract class Critter {
 			int temp_x = (p.x + dirs[dir].x) % Params.world_width;
 			int temp_y = (p.y + dirs[dir].y) % Params.world_height;
 			Point temp_p = new Point(temp_x, temp_y);
-			if (world.get(temp_p).size() == 0) {
-				return dir; 
-			}
+			if (world.get(temp_p).size() == 0) { return dir; }
 		}
-		for (int dir = 8; dir < 16; dir++) {
+		for (int dir = 0; dir < 8; dir++) {
 			int temp_x = (p.x + 2 * dirs[dir].x) % Params.world_width;
 			int temp_y = (p.y + 2 * dirs[dir].y) % Params.world_height;
 			Point temp_p = new Point(temp_x, temp_y);
-			if (world.get(temp_p).size() == 0) {
-				return dir; 
-			}
+			if (world.get(temp_p).size() == 0) { return dir + 8; }
 		}
 		return -1;
 	}

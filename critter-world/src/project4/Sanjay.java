@@ -16,6 +16,7 @@ public class Sanjay extends Critter {
 	public boolean fight(String opponent) {
 		//Patt thinks CompArch > Solid State Electronics 
 		if (opponent.equals("Y")) { return true; }
+		
 		return false;
 	}
 
