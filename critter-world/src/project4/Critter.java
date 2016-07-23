@@ -98,7 +98,7 @@ public abstract class Critter {
 			while (spot.size() > 1) { 
 				Critter critA = spot.get(0);
 				Critter critB = spot.get(1);
-				Point fightPoint = new Point(critA.x_coord, critA.y_coord); //how do we know critA is actually at this point?
+				Point fightPoint = new Point(critA.x_coord, critA.y_coord); 
 				boolean fightA = critA.fight(critB.toString());
 				boolean fightB = critB.fight(critA.toString());
 				
