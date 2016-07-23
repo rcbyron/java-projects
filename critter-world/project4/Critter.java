@@ -1,14 +1,13 @@
 /* CRITTERS Critter.java
  * EE422C Project 4 submission by
- * Replace <...> with your actual data.
- * <Student1 Name>
- * <Student1 EID>
- * <Student1 5-digit Unique No.>
- * <Student2 Name>
- * <Student2 EID>
- * <Student2 5-digit Unique No.>
- * Slip days used: <0>
- * Summer 2016
+ * Robert (Connor) Byron
+ * rcb2746
+ * 76550
+ * Joel Guo
+ * jg55475
+ * 76550
+ * Slip days used: 0 (+1 for this project)
+ * Fall 2015
  */
 package project4;
 
@@ -33,7 +32,8 @@ public abstract class Critter {
 		new Point(-1, 1),
 		new Point(-1, 0),
 		new Point(-1, -1),
-		new Point(0, -1)
+		new Point(0, -1),
+		new Point(1, -1)
 	};
 	
 	private static Map<Point, ArrayList<Critter>> world = new HashMap<Point, ArrayList<Critter>>();
@@ -51,31 +51,31 @@ public abstract class Critter {
 	/* a one-character long string that visually depicts your critter in the ASCII interface */
 	public String toString() { return "?"; }
 	
-	private int energy = 0;
+	private int energy = Params.start_energy;
 	protected int getEnergy() { return energy; }
 	
+	private boolean hasMoved;
 	private int x_coord;
 	private int y_coord;
     
     private void move(int direction) {
-    	int temp_x = (x_coord + dirs[direction].x) % Params.world_width;
-    	int temp_y = (y_coord + dirs[direction].y) % Params.world_height;
+    	x_coord = (x_coord + dirs[direction].x) % Params.world_width;
+    	y_coord = (y_coord + dirs[direction].y) % Params.world_height;
+    	hasMoved = true;
     }
 	
 	protected final void walk(int direction) {
 		energy -= Params.walk_energy_cost;
 		if (energy >= 0)
 			move(direction);
-		else
-			energy = 0;
 	}
 	
 	protected final void run(int direction) {
 		energy -= Params.run_energy_cost;
-		if (energy >= 0)
+		if (energy >= 0) {
 			move(direction);
-		else
-			energy = 0;
+			move(direction);
+		}
 	}
 	
 	protected final void reproduce(Critter offspring, int direction) {
@@ -84,9 +84,9 @@ public abstract class Critter {
 		offspring.energy = energy / 2; 
 		energy = energy % 2 == 0 ? energy / 2 : energy / 2 + 1; 
 		
-		//DIRECTION CONNOR PLS THX 
 		offspring.x_coord = (x_coord + dirs[direction].x) % Params.world_width;
 		offspring.y_coord = (x_coord + dirs[direction].x) % Params.world_width;
+		babies.add(offspring);
 	}
 
 	public abstract void doTimeStep();
@@ -108,6 +108,8 @@ public abstract class Critter {
 		    Critter me = (Critter) instanceOfMyCritter; // cast to Critter
 		    me.x_coord = getRandomInt(Params.world_width);
 		    me.y_coord = getRandomInt(Params.world_height);
+		    
+		    population.add(me);
 		    Point pos = new Point(me.x_coord, me.y_coord);
 		    
 		    ArrayList<Critter> bucket = world.get(pos);
@@ -115,6 +117,7 @@ public abstract class Critter {
 		    bucket.add(me);
 		    
 		    world.put(pos, bucket);
+		    
 		} catch (Exception e) {
 			if (e instanceof ClassNotFoundException)
 				throw new InvalidCritterException(critter_class_name);
@@ -180,24 +183,97 @@ public abstract class Critter {
 		}
 	}
 	
-	//private	static List<Critter> population = new java.util.ArrayList<Critter>();
+	private	static List<Critter> population = new java.util.ArrayList<Critter>();
 	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	
 	private static void doEncounters() {
+		for (ArrayList<Critter> spot : world.values()) {
+			//if coordinate occupied by more than one critter
+			while (spot.size() > 1) { 
+				Critter critA = spot.get(0);
+				Critter critB = spot.get(1);
+				Point fightPoint = new Point(critA.x_coord, critA.y_coord); 
+				boolean fightA = critA.fight(critB.toString());
+				boolean fightB = critB.fight(critA.toString());
+				
+				if (!fightA) { critA.tryToEscape(); }
+				if (!fightB) { critB.tryToEscape(); }
+				if (critA.energy <= 0 || critB.energy <= 0) {
+					if (critB.energy <= 0) { spot.remove(critB); population.remove(critB); }
+					if (critA.energy <= 0) { spot.remove(critA); population.remove(critA); }
+				} else if (critA.x_coord == fightPoint.x && critA.y_coord == fightPoint.y 
+					&& critB.x_coord == fightPoint.x && critB.y_coord == fightPoint.y) {
+					//actually fight
+					int rollA = getRandomInt(critA.energy);
+					int rollB = getRandomInt(critB.energy);
+					if (rollA > rollB) { 
+						critA.energy += .5 * critB.energy;
+						spot.remove(critB);
+						population.remove(critB);
+					} else {
+						critB.energy += .5 * critA.energy;
+						spot.remove(critA);
+						population.remove(critA);
+					}
+				} else {
+					if (!(critB.x_coord == fightPoint.x && critB.y_coord == fightPoint.y)) {
+						spot.remove(critB);
+					}
+					if (!(critA.x_coord == fightPoint.x && critA.y_coord == fightPoint.y)) {
+						spot.remove(critA);
+					}
+				}
+			}
+		}
+	}
+	
+	/*
+	 * if Critter has already moved or cannot find open space, deduct walking energy
+	 * else walk or run to open spot 
+	 */
+	private void tryToEscape() {
+		int escapeDir = openAdjacentPoint(new Point(x_coord, y_coord));
+		if (hasMoved || escapeDir == -1) { energy -= Params.walk_energy_cost; } 
+		else if (escapeDir < 8) { walk(escapeDir); } 
+		else if(escapeDir < 16) { run(escapeDir - 8); }
+	}
+	
+	/*
+	 * return 0-7 for direction of immediate open space
+	 * return 8-15 for direction of open space two spaces away
+	 */
+	private static int openAdjacentPoint(Point p){
+		for (int dir = 0; dir < 8; dir++) {
+			int temp_x = (p.x + dirs[dir].x) % Params.world_width;
+			int temp_y = (p.y + dirs[dir].y) % Params.world_height;
+			Point temp_p = new Point(temp_x, temp_y);
+			if (!world.containsKey(temp_p) || world.get(temp_p).size() == 0) { return dir; }
+		}
+		for (int dir = 0; dir < 8; dir++) {
+			int temp_x = (p.x + 2 * dirs[dir].x) % Params.world_width;
+			int temp_y = (p.y + 2 * dirs[dir].y) % Params.world_height;
+			Point temp_p = new Point(temp_x, temp_y);
+			if (!world.containsKey(temp_p) || world.get(temp_p).size() == 0) { return dir + 8; }
+		}
+		return -1;
 	}
 	
 	private static int timestep = 0;
 	public static void worldTimeStep() {
 		timestep++;
+		System.out.println("step: "+timestep);
 		
 //		loop through all critters in collection, call doTimeStep for each
 //		i. walk/run 
 //		ii. energy deduction
 //		iii. reproduce but babies still in crib
 //		iv. cheat
-		for (ArrayList<Critter> spot : world.values())
-			for (Critter bug : spot)
+		for (ArrayList<Critter> spot : world.values()) {
+			for (Critter bug : spot) {
+				bug.hasMoved = false;
 				bug.doTimeStep();
+			}
+		}
 
 		doEncounters();
 		
@@ -215,20 +291,27 @@ public abstract class Critter {
 		}
 		
 		// Remove dead critters
-		for (ArrayList<Critter> spot : world.values()) {
-			Iterator<Critter> iter = spot.iterator();
-			while (iter.hasNext()) {
-				Critter bug = iter.next();
-				if (bug.energy <= 0)
-					iter.remove();
+		Iterator<Critter> iter = population.iterator();
+		while (iter.hasNext()) {
+			Critter bug = iter.next();
+			if (bug.energy <= 0) {
+				iter.remove();
+				System.out.println("removing "+bug);
 			}
 		}
 				
-		// Add babies to populations
-		for (Critter baby : babies) {
-			Point pos = new Point(baby.x_coord, baby.y_coord);
-			world.get(pos).add(baby);
+		// Add babies to population
+		population.addAll(babies);
+		
+		// Clear and update critter map
+		for (ArrayList<Critter> spot : world.values())
+			spot.clear();
+		for (Critter bug : population) {
+			Point p = new Point(bug.x_coord, bug.y_coord);
+			if (!world.containsKey(p)) world.put(p, new ArrayList<Critter>());
+			world.get(p).add(bug);
 		}
+		displayWorld();
 	}
 	
 	public static void displayWorld() {
