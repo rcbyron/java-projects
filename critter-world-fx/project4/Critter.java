@@ -19,8 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import javafx.application.Application;
-
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
  * no new public, protected or default-package code or data can be added to Critter
@@ -39,6 +37,13 @@ public abstract class Critter {
 	};
 	
 	private static Map<Point, ArrayList<Critter>> world = new HashMap<Point, ArrayList<Critter>>();
+	
+	public static List<Critter> getPopulation() {
+		return population;
+	}
+	
+	public int getX() { return x_coord; }
+	public int getY() { return y_coord; }
 	
 	private static java.util.Random rand = new java.util.Random();
 	public static int getRandomInt(int max) {
@@ -315,21 +320,22 @@ public abstract class Critter {
 	}
 	
 	public static void displayWorld() {
-		for (int i = -1; i <= Params.world_height; i++) {
-			for (int j = -1; j <= Params.world_width; j++) {
-				if (i == -1 || i == Params.world_height)
-					System.out.print((j == -1 || j == Params.world_width) ? '+' : '-');
-				else {
-					Point currPos = new Point(j, i);
-					if (j == -1 || j == Params.world_width)
-						System.out.print('|');
-					else if (world.containsKey(currPos) && world.get(currPos).size() > 0)
-						System.out.print(world.get(currPos).get(0));
-					else
-						System.out.print(' ');
-				}
-			}
-			System.out.println();
-		}
+//		for (int i = -1; i <= Params.world_height; i++) {
+//			for (int j = -1; j <= Params.world_width; j++) {
+//				if (i == -1 || i == Params.world_height)
+//					System.out.print((j == -1 || j == Params.world_width) ? '+' : '-');
+//				else {
+//					Point currPos = new Point(j, i);
+//					if (j == -1 || j == Params.world_width)
+//						System.out.print('|');
+//					else if (world.containsKey(currPos) && world.get(currPos).size() > 0)
+//						System.out.print(world.get(currPos).get(0));
+//					else
+//						System.out.print(' ');
+//				}
+//			}
+//			System.out.println();
+//		}
+		Main.launch(Main.class);
 	}
 }
