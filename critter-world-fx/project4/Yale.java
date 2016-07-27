@@ -11,7 +11,12 @@
  */
 package project4;
 
+import javafx.scene.paint.Color;
+
 public class Yale extends Critter {
+	
+	@Override
+	public Color getColor() { return Color.YELLOW; }
 	
 	@Override
 	public String toString() { return "Y"; }

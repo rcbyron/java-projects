@@ -11,8 +11,13 @@
  */
 package project4;
 
+import javafx.scene.paint.Color;
+
 public class Vallath extends Critter {
 
+	@Override
+	public Color getColor() { return Color.CORNFLOWERBLUE; }
+	
 	@Override
 	public String toString() { return "V";	}
 	

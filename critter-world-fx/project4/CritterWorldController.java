@@ -14,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 
 
 public class CritterWorldController implements Initializable {
+	
+	private static final int SQ_SIZE = 6;
 
     @FXML //  fx:id="myButton"
     private Canvas critterCanvas; // Value injected by FXMLLoader
@@ -31,8 +33,6 @@ public class CritterWorldController implements Initializable {
     
     @Override // This method is called by the FXMLLoader when initialization is complete
     public void initialize(URL fxmlFileLocation, ResourceBundle resources) {
-        //assert myButton != null : "fx:id=\"myButton\" was not injected: check your FXML file 'simple.fxml'.";
-
         // initialize your logic here: all @FXML variables will have been injected
     	
         gc = critterCanvas.getGraphicsContext2D();
@@ -56,7 +56,7 @@ public class CritterWorldController implements Initializable {
 //        //gc.setFill(Color.BLACK);
 //        System.out.println(scrollPane.getWidth());
         //gc.fillRect(0, 0, critterCanvas.getWidth(), critterCanvas.getHeight());
-        createCanvasGrid(critterCanvas, 600, 400, true);
+        createCanvasGrid(critterCanvas, Params.world_width * SQ_SIZE, Params.world_height * SQ_SIZE, true);
         centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
     }
 
@@ -71,7 +71,6 @@ public class CritterWorldController implements Initializable {
     private Canvas createCanvasGrid(Canvas canvas, int width, int height, boolean sharp) {
     	
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
         
         int startX = (int)(canvas.getWidth() / 2 - width / 2);
         int startY = (int)(canvas.getHeight() / 2 - height / 2);
@@ -79,30 +78,21 @@ public class CritterWorldController implements Initializable {
         int endY = (int)(canvas.getHeight() / 2 + height / 2);
         
         for (Critter c : Critter.getPopulation()) {
-        	gc.fillRect(startX + c.getX()*10, startY+c.getY()*10, 10, 10);
+        	gc.setFill(c.getColor());
+        	gc.fillRect(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE);
         }
         System.out.println(startX);
         gc.setLineWidth(1.0);
 
-        for (int x = startX; x <= endX; x+=10) {
-            double x1;
-            if (sharp) {
-                x1 = x + 0.5 ;
-            } else {
-                x1 = x ;
-            }
+        for (int x = startX; x <= endX; x += SQ_SIZE) {
+            double x1 = x + (sharp ? 0.5 : 0);
             gc.moveTo(x1, startY+1);
             gc.lineTo(x1, endY);
             gc.stroke();
         }
 
-        for (int y = startY; y <= endY; y+=10) {
-            double y1;
-            if (sharp) {
-                y1 = y + 0.5 ;
-            } else {
-                y1 = y ;
-            }
+        for (int y = startY; y <= endY; y += SQ_SIZE) {
+        	double y1 = y + (sharp ? 0.5 : 0);
             gc.moveTo(startX+1, y1);
             gc.lineTo(endX, y1);
             gc.stroke();

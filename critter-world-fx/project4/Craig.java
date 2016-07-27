@@ -1,6 +1,11 @@
 package project4;
 
+import javafx.scene.paint.Color;
+
 public class Craig extends Critter {
+	
+	@Override
+	public Color getColor() { return Color.CRIMSON; }
 	
 	@Override
 	public String toString() { return "C"; }

@@ -11,8 +11,12 @@
  */
 package project4;
 
+import javafx.scene.paint.Color;
+
 public class Sanjay extends Critter {
 	
+	@Override
+	public Color getColor() { return Color.web("#963"); }
 	
 	@Override
 	public String toString() { return "S"; }

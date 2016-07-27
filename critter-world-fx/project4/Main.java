@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("world.fxml"));
         primaryStage.setTitle("Critter World 3000: A Tale of Electrical Engineering Pupils and Professors (Ultra Deluxe Platinum Edition)");
-        primaryStage.setScene(new Scene(root, 1080, 720));
+        primaryStage.setScene(new Scene(root, 720, 480));
         primaryStage.show();
     }
     

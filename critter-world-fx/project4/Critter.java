@@ -19,6 +19,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
+
 /* see the PDF for descriptions of the methods and fields in this class
  * you may add fields, methods or inner classes to Critter ONLY if you make your additions private
  * no new public, protected or default-package code or data can be added to Critter
@@ -41,6 +43,8 @@ public abstract class Critter {
 	public static List<Critter> getPopulation() {
 		return population;
 	}
+	
+	public Color getColor() { return Color.BLACK; }
 	
 	public int getX() { return x_coord; }
 	public int getY() { return y_coord; }
