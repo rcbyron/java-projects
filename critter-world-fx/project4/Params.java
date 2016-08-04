@@ -12,4 +12,5 @@ public class Params {
 	public static final int photosynthesis_energy_amount = 1;
 	public static final int start_energy = 100;
 
+	public static int look_energy_cost = 1;
 }
