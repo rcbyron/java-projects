@@ -76,6 +76,7 @@ public abstract class Critter {
     }
     
     protected String look(int direction) {
+    	energy -= Params.look_energy_cost;
     	int x = (x_coord + dirs[direction].x) % Params.world_width;
     	int y = (y_coord + dirs[direction].y) % Params.world_height;
     	Point p = new Point(x, y);
@@ -86,6 +87,7 @@ public abstract class Critter {
     }
     
     protected String look2(int direction) {
+    	energy -= Params.look_energy_cost;
     	int x = (x_coord + 2 * dirs[direction].x) % Params.world_width;
     	int y = (y_coord + 2 * dirs[direction].y) % Params.world_height;
     	Point p = new Point(x, y);
