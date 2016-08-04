@@ -18,8 +18,12 @@ public class Jon extends Critter {
 	
 	@Override
 	public void doTimeStep() {
-		// Valvano walks around randomly
-		walk(Critter.getRandomInt(7));
+		int dir = Critter.getRandomInt(7);
+		while(look(dir).equals("J")) {
+			dir = Critter.getRandomInt(7); 
+		}
+		// Valvano walks around randomly but avoids other Valvanos
+		walk(dir);
 		Jon child = new Jon();
 		// like father like son
 		reproduce(child, Critter.getRandomInt(7));
