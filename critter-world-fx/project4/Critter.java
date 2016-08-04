@@ -27,6 +27,8 @@ import javafx.scene.paint.Color;
  */
 public abstract class Critter {
 	
+	
+	
 	private static final Point[] dirs = {
 		new Point(1, 0),
 		new Point(1, 1),
