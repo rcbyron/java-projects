@@ -64,12 +64,12 @@
                            <bottom>
                               <HBox prefHeight="37.0" prefWidth="152.0" BorderPane.alignment="CENTER">
                                  <children>
-                                    <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetWorld" prefHeight="27.0" prefWidth="70.0" text="Reset">
+                                    <TextField prefHeight="27.0" prefWidth="50.0" text="1">
                                        <HBox.margin>
-                                          <Insets bottom="4.0" left="4.0" top="4.0" />
+                                          <Insets left="4.0" top="4.0" />
                                        </HBox.margin>
-                                    </Button>
-                                    <Button fx:id="stepButton" mnemonicParsing="false" onAction="#doStep" prefHeight="27.0" prefWidth="70.0" text="Step">
+                                    </TextField>
+                                    <Button fx:id="stepButton" mnemonicParsing="false" onAction="#doStep" prefHeight="27.0" prefWidth="102.0" text="Step">
                                        <HBox.margin>
                                           <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                        </HBox.margin>
@@ -78,6 +78,11 @@
                               </HBox>
                            </bottom>
                         </BorderPane>
+                        <Button fx:id="resetButton" mnemonicParsing="false" onAction="#resetWorld" prefHeight="27.0" prefWidth="146.0" text="Reset">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" />
+                           </VBox.margin>
+                        </Button>
                         <Separator prefWidth="200.0" />
                         <BorderPane prefHeight="36.0" prefWidth="152.0">
                            <top>
@@ -105,7 +110,7 @@
                                     <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
                                  </HBox.margin>
                               </ChoiceBox>
-                              <TextField fx:id="critterAddCount" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="51.0">
+                              <TextField fx:id="critterAddCount" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="27.0" prefWidth="50.0" text="1">
                                  <HBox.margin>
                                     <Insets bottom="4.0" right="4.0" top="4.0" />
                                  </HBox.margin>
@@ -152,9 +157,14 @@
                               <Separator prefWidth="200.0" />
                            </children>
                         </VBox>
-                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#startSim" prefHeight="43.0" prefWidth="148.0" text="Play">
+                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#quit" prefHeight="43.0" prefWidth="148.0" text="Quit">
                            <VBox.margin>
                               <Insets bottom="4.0" left="4.0" right="4.0" top="4.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Button fx:id="playButton" mnemonicParsing="false" onAction="#startSim" prefHeight="43.0" prefWidth="148.0" text="Play">
+                           <VBox.margin>
+                              <Insets bottom="4.0" left="4.0" right="4.0" />
                            </VBox.margin>
                         </Button>
                      </children>
