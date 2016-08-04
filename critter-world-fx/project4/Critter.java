@@ -74,6 +74,26 @@ public abstract class Critter {
     	y_coord = (y_coord + dirs[direction].y) % Params.world_height;
     	hasMoved = true;
     }
+    
+    protected String look(int direction) {
+    	int x = (x_coord + dirs[direction].x) % Params.world_width;
+    	int y = (y_coord + dirs[direction].y) % Params.world_height;
+    	Point p = new Point(x, y);
+    	if(world.get(p).size() > 0) {
+    		return world.get(p).get(0).toString();
+    	}
+    	return null;
+    }
+    
+    protected String look2(int direction) {
+    	int x = (x_coord + 2 * dirs[direction].x) % Params.world_width;
+    	int y = (y_coord + 2 * dirs[direction].y) % Params.world_height;
+    	Point p = new Point(x, y);
+    	if(world.get(p).size() > 0) {
+    		return world.get(p).get(0).toString();
+    	}
+    	return null;
+    }
 	
 	protected final void walk(int direction) {
 		energy -= Params.walk_energy_cost;
