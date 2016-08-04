@@ -68,32 +68,38 @@ public abstract class Critter {
 	private boolean hasMoved;
 	private int x_coord;
 	private int y_coord;
-    
+	
     private void move(int direction) {
     	x_coord = (x_coord + dirs[direction].x) % Params.world_width;
+    	if (x_coord < 0) x_coord += Params.world_width;
     	y_coord = (y_coord + dirs[direction].y) % Params.world_height;
+    	if (y_coord < 0) y_coord += Params.world_height;
     	hasMoved = true;
+    }
+    
+    protected Point lookHelper(int direction, int distance) {
+    	int x = (x_coord + distance * dirs[direction].x) % Params.world_width;
+    	if (x < 0) x += Params.world_width;
+    	int y = (y_coord + distance * dirs[direction].y) % Params.world_height;
+    	if (y < 0) y += Params.world_height;
+    	return new Point(x, y);
     }
     
     protected String look(int direction) {
     	energy -= Params.look_energy_cost;
-    	int x = (x_coord + dirs[direction].x) % Params.world_width;
-    	int y = (y_coord + dirs[direction].y) % Params.world_height;
-    	Point p = new Point(x, y);
-    	if(world.containsKey(p) && world.get(p).size() > 0) {
+
+    	Point p = lookHelper(direction, 1);
+    	if(world.containsKey(p) && world.get(p).size() > 0)
     		return world.get(p).get(0).toString();
-    	}
     	return null;
     }
     
     protected String look2(int direction) {
     	energy -= Params.look_energy_cost;
-    	int x = (x_coord + 2 * dirs[direction].x) % Params.world_width;
-    	int y = (y_coord + 2 * dirs[direction].y) % Params.world_height;
-    	Point p = new Point(x, y);
-    	if(world.containsKey(p) && world.get(p).size() > 0) {
+
+    	Point p = lookHelper(direction, 2);
+    	if(world.containsKey(p) && world.get(p).size() > 0)
     		return world.get(p).get(0).toString();
-    	}
     	return null;
     }
 	
@@ -117,8 +123,9 @@ public abstract class Critter {
 		offspring.energy = energy / 2; 
 		energy = energy % 2 == 0 ? energy / 2 : energy / 2 + 1; 
 		
-		offspring.x_coord = (x_coord + dirs[direction].x) % Params.world_width;
-		offspring.y_coord = (y_coord + dirs[direction].y) % Params.world_height;
+		Point p = lookHelper(direction, 1);
+		offspring.x_coord = p.x;
+		offspring.y_coord = p.y;
 		babies.add(offspring);
 	}
 
@@ -275,17 +282,13 @@ public abstract class Critter {
 	 * return 8-15 for direction of open space two spaces away
 	 */
 	private static int openAdjacentPoint(Point p){
-		for (int dir = 0; dir < 8; dir++) {
-			int temp_x = (p.x + dirs[dir].x) % Params.world_width;
-			int temp_y = (p.y + dirs[dir].y) % Params.world_height;
+		for (int dir = 0; dir < 16; dir++) {
+	    	int temp_x = (p.x + ((dir+8) / 8)*dirs[dir].x) % Params.world_width;
+	    	if (temp_x < 0) temp_x += Params.world_width;
+	    	int temp_y = (p.y + ((dir+8) / 8)*dirs[dir].y) % Params.world_height;
+	    	if (temp_y < 0) temp_y += Params.world_height;
 			Point temp_p = new Point(temp_x, temp_y);
 			if (!world.containsKey(temp_p) || world.get(temp_p).size() == 0) { return dir; }
-		}
-		for (int dir = 0; dir < 8; dir++) {
-			int temp_x = (p.x + 2 * dirs[dir].x) % Params.world_width;
-			int temp_y = (p.y + 2 * dirs[dir].y) % Params.world_height;
-			Point temp_p = new Point(temp_x, temp_y);
-			if (!world.containsKey(temp_p) || world.get(temp_p).size() == 0) { return dir + 8; }
 		}
 		return -1;
 	}
@@ -342,26 +345,9 @@ public abstract class Critter {
 			if (!world.containsKey(p)) world.put(p, new ArrayList<Critter>());
 			world.get(p).add(bug);
 		}
-		// displayWorld();
 	}
 	
 	public static void displayWorld() {
-//		for (int i = -1; i <= Params.world_height; i++) {
-//			for (int j = -1; j <= Params.world_width; j++) {
-//				if (i == -1 || i == Params.world_height)
-//					System.out.print((j == -1 || j == Params.world_width) ? '+' : '-');
-//				else {
-//					Point currPos = new Point(j, i);
-//					if (j == -1 || j == Params.world_width)
-//						System.out.print('|');
-//					else if (world.containsKey(currPos) && world.get(currPos).size() > 0)
-//						System.out.print(world.get(currPos).get(0));
-//					else
-//						System.out.print(' ');
-//				}
-//			}
-//			System.out.println();
-//		}
 		Main.launch(Main.class);
 	}
 }

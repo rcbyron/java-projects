@@ -2,6 +2,8 @@ package project4;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -46,10 +48,6 @@ public class CritterWorldController implements Initializable {
         });
     }
     
-    protected void clearWorld() {
-    	
-    }
-    
     @FXML
     protected void resetWorld() { 
 
@@ -67,10 +65,10 @@ public class CritterWorldController implements Initializable {
         	System.out.print("wah wah... wuhhh.");
         }
         
-        critterCanvas.setWidth(scrollPane.getWidth());
-        critterCanvas.setHeight(scrollPane.getHeight());
-        createCanvasGrid(critterCanvas, Params.world_width * SQ_SIZE, Params.world_height * SQ_SIZE, true);
+        critterCanvas.setWidth(Params.world_width * SQ_SIZE);
+        critterCanvas.setHeight(Params.world_height * SQ_SIZE);
         centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
+        createCanvasGrid(critterCanvas, Params.world_width * SQ_SIZE, Params.world_height * SQ_SIZE, true);
     }
     
     @FXML
@@ -83,15 +81,17 @@ public class CritterWorldController implements Initializable {
     protected void quit() { System.exit(0); return; }
     
     @FXML
-    protected void startSim() { return; }
+    protected void startSim() { 
+    	new Timer().scheduleAtFixedRate(new TimerTask(){
+    	    @Override
+    	    public void run(){
+    	       doStep();
+    	    }
+    	},0,2000);
+    }
     
     @FXML
     protected void toggleStats() { return; }
-    
-    @FXML
-    protected void doSomething() throws InvalidCritterException {
-
-    }
 
     public void centerNodeInScrollPane(ScrollPane scrollPane, Node node) {
         double h = scrollPane.getContent().getBoundsInLocal().getHeight();
@@ -113,11 +113,10 @@ public class CritterWorldController implements Initializable {
         gc.setFill(Color.WHITE);
         gc.fillRect(startX, startY, endX, endY);
         for (Critter c : Critter.getPopulation()) {
-        	if (c.getX() > 79 || c.getY() > 39) System.out.println(c.getX() + " - " + c.getY());
+        	if (c.getX() < 0 || c.getY() < 0) System.out.println(c.getX() + " - " + c.getY());
         	gc.setFill(c.getColor());
         	gc.fillRect(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE);
         }
-        System.out.println(startX);
         gc.setLineWidth(1.0);
 
         for (int x = startX; x <= endX; x += SQ_SIZE) {
