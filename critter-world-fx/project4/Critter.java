@@ -79,7 +79,7 @@ public abstract class Critter {
     	int x = (x_coord + dirs[direction].x) % Params.world_width;
     	int y = (y_coord + dirs[direction].y) % Params.world_height;
     	Point p = new Point(x, y);
-    	if(world.get(p).size() > 0) {
+    	if(world.containsKey(p) && world.get(p).size() > 0) {
     		return world.get(p).get(0).toString();
     	}
     	return null;
@@ -89,7 +89,7 @@ public abstract class Critter {
     	int x = (x_coord + 2 * dirs[direction].x) % Params.world_width;
     	int y = (y_coord + 2 * dirs[direction].y) % Params.world_height;
     	Point p = new Point(x, y);
-    	if(world.get(p).size() > 0) {
+    	if(world.containsKey(p) && world.get(p).size() > 0) {
     		return world.get(p).get(0).toString();
     	}
     	return null;
@@ -116,7 +116,7 @@ public abstract class Critter {
 		energy = energy % 2 == 0 ? energy / 2 : energy / 2 + 1; 
 		
 		offspring.x_coord = (x_coord + dirs[direction].x) % Params.world_width;
-		offspring.y_coord = (x_coord + dirs[direction].x) % Params.world_width;
+		offspring.y_coord = (y_coord + dirs[direction].y) % Params.world_height;
 		babies.add(offspring);
 	}
 
@@ -288,7 +288,7 @@ public abstract class Critter {
 		return -1;
 	}
 	
-	private static int timestep = 0;
+	public static int timestep = 0;
 	public static void worldTimeStep() {
 		timestep++;
 		// System.out.println("step: "+timestep);
