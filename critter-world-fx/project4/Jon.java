@@ -19,7 +19,9 @@ public class Jon extends Critter {
 	@Override
 	public void doTimeStep() {
 		int dir = Critter.getRandomInt(7);
-		while(look(dir) == null || look(dir).equals("J")) {
+		for (int i = 0; i < 150; i++) {
+			if (look(dir) == null || !look(dir).equals("J"))
+				break;
 			dir = Critter.getRandomInt(7); 
 		}
 		// Valvano walks around randomly but avoids other Valvanos

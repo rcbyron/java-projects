@@ -23,7 +23,7 @@ public class CritterWorldController implements Initializable {
 	private TextField critterAddCount;
 	@FXML
 	private ChoiceBox critterSelect;
-	@FXML
+	@FXML 
 	private TextField seedField;
 	
 	private static final int SQ_SIZE = 6;
