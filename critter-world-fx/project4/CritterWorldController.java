@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -21,7 +22,9 @@ public class CritterWorldController implements Initializable {
 	@FXML
 	private TextField critterAddCount;
 	@FXML
-	private TextField critterSelect;
+	private ChoiceBox critterSelect;
+	@FXML
+	private TextField seedField;
 	
 	private static final int SQ_SIZE = 6;
 
@@ -79,13 +82,16 @@ public class CritterWorldController implements Initializable {
     @FXML
     protected void addCritters() throws InvalidCritterException { 
     	for (int i = 0; i < Integer.parseInt(critterAddCount.getText()); i++){
-    		Critter.makeCritter(critterSelect.getText());
+    		Critter.makeCritter(critterSelect.getValue().toString());
     	}
     	return; 
     }
     
     @FXML
-    protected void setSeed() { return; }
+    protected void setSeed() { 
+    	Critter.setSeed(Long.parseLong(seedField.getText()));
+    	return; 
+    }
     
     @FXML
     protected void quit() { System.exit(0); return; }
