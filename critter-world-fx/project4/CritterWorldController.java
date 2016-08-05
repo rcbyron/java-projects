@@ -12,11 +12,16 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 
 
 public class CritterWorldController implements Initializable {
+	@FXML
+	private TextField critterAddCount;
+	@FXML
+	private TextField critterSelect;
 	
 	private static final int SQ_SIZE = 6;
 
@@ -72,7 +77,12 @@ public class CritterWorldController implements Initializable {
     }
     
     @FXML
-    protected void addCritters() { return; }
+    protected void addCritters() throws InvalidCritterException { 
+    	for (int i = 0; i < Integer.parseInt(critterAddCount.getText()); i++){
+    		Critter.makeCritter(critterSelect.getText());
+    	}
+    	return; 
+    }
     
     @FXML
     protected void setSeed() { return; }
