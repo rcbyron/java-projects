@@ -1,3 +1,14 @@
+/* CRITTERS Main.java
+ * EE422C Project 4 submission by
+ * Robert (Connor) Byron
+ * rcb2746
+ * 76550
+ * Joel Guo
+ * jg55475
+ * 76550
+ * Slip days used: 1
+ * Spring 2016
+ */
 package project4;
 
 import javafx.application.Application;

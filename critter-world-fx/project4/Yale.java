@@ -1,4 +1,4 @@
-/* CRITTERS Main.java
+/* CRITTERS Yale.java
  * EE422C Project 4 submission by
  * Robert (Connor) Byron
  * rcb2746
@@ -6,8 +6,8 @@
  * Joel Guo
  * jg55475
  * 76550
- * Slip days used: 0 (+1 for this project)
- * Fall 2015
+ * Slip days used: 1
+ * Spring 2016
  */
 package project4;
 
@@ -16,7 +16,7 @@ import javafx.scene.paint.Color;
 public class Yale extends Critter {
 	
 	@Override
-	public Color getColor() { return Color.YELLOW; }
+	public Color getColor() { return Color.DARKORCHID; }
 	
 	@Override
 	public String toString() { return "Y"; }

@@ -6,8 +6,8 @@
  * Joel Guo
  * jg55475
  * 76550
- * Slip days used: 0 (+1 for this project)
- * Fall 2015
+ * Slip days used: 1
+ * Spring 2016
  */
 package project4;
 
@@ -39,6 +39,13 @@ public abstract class Critter {
 	};
 	
 	private static Map<Point, ArrayList<Critter>> world = new HashMap<Point, ArrayList<Critter>>();
+	private	static List<Critter> population = new java.util.ArrayList<Critter>();
+	private static List<Critter> babies = new java.util.ArrayList<Critter>();
+	
+	public static void resetWorld() {
+		population.clear();
+		babies.clear();
+	}
 	
 	public static List<Critter> getPopulation() {
 		return population;
@@ -221,9 +228,6 @@ public abstract class Critter {
 			super.y_coord = new_y_coord;
 		}
 	}
-	
-	private	static List<Critter> population = new java.util.ArrayList<Critter>();
-	private static List<Critter> babies = new java.util.ArrayList<Critter>();
 	
 	private static void doEncounters() {
 		for (ArrayList<Critter> spot : world.values()) {

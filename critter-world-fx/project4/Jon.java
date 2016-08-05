@@ -1,4 +1,4 @@
-/* CRITTERS Main.java
+/* CRITTERS Jon.java
  * EE422C Project 4 submission by
  * Robert (Connor) Byron
  * rcb2746
@@ -6,8 +6,8 @@
  * Joel Guo
  * jg55475
  * 76550
- * Slip days used: 0 (+1 for this project)
- * Fall 2015
+ * Slip days used: 1
+ * Spring 2016
  */
 package project4;
 
