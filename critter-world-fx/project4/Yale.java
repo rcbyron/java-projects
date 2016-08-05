@@ -34,7 +34,7 @@ public class Yale extends Critter {
 	public boolean fight(String opponent) {
 		//Patt fights if Nandakumar is watching 
 		for (int i = 0; i < 8; i++) {
-			if (look(i).equals("V") || look2(i).equals("V")) {
+			if (look(i) != null && look2(i) != null && (look(i).equals("V") || look2(i).equals("V"))) {
 				return true; 
 			}
 		}

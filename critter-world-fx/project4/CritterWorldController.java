@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -18,22 +19,19 @@ import javafx.scene.paint.Color;
 
 
 public class CritterWorldController implements Initializable {
+	
+	private static final int SQ_SIZE = 6;
+	
 	@FXML
 	private TextField critterAddCount;
 	@FXML
-	private TextField critterSelect;
-	
-	private static final int SQ_SIZE = 6;
-
-    @FXML //  fx:id="myButton"
-    private Canvas critterCanvas; // Value injected by FXMLLoader
-    
+	private ChoiceBox<String> critterSelect;
+    @FXML
+    private Canvas critterCanvas;
     @FXML
     private AnchorPane critterPane;
-    
     @FXML
     private ScrollPane scrollPane;
-    
     @FXML
     private Slider canvasSlider;
 
@@ -45,18 +43,28 @@ public class CritterWorldController implements Initializable {
     	
         gc = critterCanvas.getGraphicsContext2D();
         
+        critterCanvas.setWidth(Params.world_width * SQ_SIZE);
+        critterCanvas.setHeight(Params.world_height * SQ_SIZE);
+        centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
+        
         canvasSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             critterCanvas.setScaleX(2.0 * (newValue.intValue()/100.0));
             critterCanvas.setScaleY(2.0 * (newValue.intValue()/100.0));
 //            node.setTranslateX(0 - node.getScene().getWidth()/4);     
 //            node.setTranslateY(0 - node.getScene().getHeight()/4);
         });
+        critterSelect.getItems().add("project4.Algae");
+        critterSelect.getItems().add("project4.Craig");
+        critterSelect.getItems().add("project4.Jon");
+        critterSelect.getItems().add("project4.Sanjay");
+        critterSelect.getItems().add("project4.Vallath");
+        critterSelect.getItems().add("project4.Yale");
     }
     
     @FXML
-    protected void resetWorld() { 
-
-    	return;
+    protected void resetWorld() {
+    	Critter.getPopulation().clear();
+    	System.out.println("Population reset.");
     }
     
     @FXML
@@ -69,17 +77,14 @@ public class CritterWorldController implements Initializable {
         } catch (Exception e) {
         	System.out.print("wah wah... wuhhh.");
         }
-        
-        critterCanvas.setWidth(Params.world_width * SQ_SIZE);
-        critterCanvas.setHeight(Params.world_height * SQ_SIZE);
-        centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
         createCanvasGrid(critterCanvas, Params.world_width * SQ_SIZE, Params.world_height * SQ_SIZE, true);
     }
     
     @FXML
     protected void addCritters() throws InvalidCritterException { 
     	for (int i = 0; i < Integer.parseInt(critterAddCount.getText()); i++){
-    		Critter.makeCritter(critterSelect.getText());
+    		Critter.makeCritter((String)critterSelect.getValue());
+    		//System.out.println(critterSelect.getValue());
     	}
     	return; 
     }
