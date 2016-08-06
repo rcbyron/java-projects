@@ -47,9 +47,7 @@ public abstract class Critter {
 		babies.clear();
 	}
 	
-	public static List<Critter> getPopulation() {
-		return population;
-	}
+	public static List<Critter> getPopulation() { return population; }
 	
 	public Color getColor() { return Color.BLACK; }
 	

@@ -33,20 +33,15 @@ public class CritterWorldController implements Initializable {
 	
 	private static final int SQ_SIZE = 6;
 	
-	@FXML
-	private TextField seedField;
-	@FXML
-	private TextField critterAddCount;
-	@FXML
-	private ChoiceBox<String> critterSelect;
-    @FXML
-    private Canvas critterCanvas;
-    @FXML
-    private AnchorPane critterPane;
-    @FXML
-    private ScrollPane scrollPane;
-    @FXML
-    private Slider canvasSlider;
+	@FXML private TextField seedField;
+	@FXML private TextField critterAddCount;
+	@FXML private ChoiceBox<String> critterSelect;
+    @FXML private Canvas critterCanvas;
+    @FXML private AnchorPane critterPane;
+    @FXML private ScrollPane scrollPane;
+    @FXML private Slider canvasSlider;
+    
+    @FXML private CanvasController canvasController;
 
     private GraphicsContext gc;
     
@@ -58,8 +53,7 @@ public class CritterWorldController implements Initializable {
         
         critterCanvas.setWidth(Params.world_width * SQ_SIZE);
         critterCanvas.setHeight(Params.world_height * SQ_SIZE);
-        centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
-        
+        //centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
         canvasSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
             critterCanvas.setScaleX(2.0 * (newValue.intValue()/100.0));
             critterCanvas.setScaleY(2.0 * (newValue.intValue()/100.0));
@@ -76,7 +70,8 @@ public class CritterWorldController implements Initializable {
     
     @FXML
     protected void resetWorld() {
-    	Critter.resetWorld();
+    	//Critter.resetWorld();
+    	canvasController.cool(); 
     	System.out.println("Population reset.");
     }
     
@@ -118,20 +113,20 @@ public class CritterWorldController implements Initializable {
     @FXML
     protected void toggleStats() { return; }
 
-    public void centerNodeInScrollPane(ScrollPane scrollPane, Node node) {
-        double h = scrollPane.getContent().getBoundsInLocal().getHeight();
-        double y = (node.getBoundsInParent().getMaxY() + 
-                    node.getBoundsInParent().getMinY()) / 2.0;
-        double v = scrollPane.getViewportBounds().getHeight();
-        scrollPane.setVvalue(scrollPane.getVmax() * ((y - 0.5 * v) / (h - v)));
-    }
+//    public void centerNodeInScrollPane(ScrollPane scrollPane, Node node) {
+//        double h = scrollPane.getContent().getBoundsInLocal().getHeight();
+//        double y = (node.getBoundsInParent().getMaxY() + 
+//                    node.getBoundsInParent().getMinY()) / 2.0;
+//        double v = scrollPane.getViewportBounds().getHeight();
+//        scrollPane.setVvalue(scrollPane.getVmax() * ((y - 0.5 * v) / (h - v)));
+//    }
     
     private void draw(Canvas canvas, int width, int height) {
         
-        int startX = (int)(canvas.getWidth() / 2 - width / 2);
-        int startY = (int)(canvas.getHeight() / 2 - height / 2);
-        int endX = (int)(canvas.getWidth() / 2 + width / 2);
-        int endY = (int)(canvas.getHeight() / 2 + height / 2);
+        int startX = (int)(canvas.getWidth() / 2 - width / 2.0);
+        int startY = (int)(canvas.getHeight() / 2 - height / 2.0);
+        int endX = (int)(canvas.getWidth() / 2 + width / 2.0);
+        int endY = (int)(canvas.getHeight() / 2 + height / 2.0);
         
         gc.setFill(Color.WHITE);
         gc.fillRect(startX, startY, endX, endY);
@@ -143,14 +138,14 @@ public class CritterWorldController implements Initializable {
         gc.setLineWidth(1.0);
 
         for (int x = startX; x <= endX; x += SQ_SIZE) {
-            double x1 = x + 0.5;
+            double x1 = x;// + 0.5;
             gc.moveTo(x1, startY+1);
             gc.lineTo(x1, endY);
             gc.stroke();
         }
 
         for (int y = startY; y <= endY; y += SQ_SIZE) {
-        	double y1 = y + 0.5;
+        	double y1 = y;// + 0.5;
             gc.moveTo(startX+1, y1);
             gc.lineTo(endX, y1);
             gc.stroke();

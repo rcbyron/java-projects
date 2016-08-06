@@ -21,6 +21,7 @@
 <?import javafx.scene.text.Font?>
 
 <VBox prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project4.CritterWorldController">
+<!--   <fx:include fx:id="canvas" source="canvas.fxml"/> -->
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>

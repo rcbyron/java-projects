@@ -29,6 +29,18 @@ public class Main extends Application {
         primaryStage.setTitle("Critter World 3000: A Tale of Electrical Engineering Pupils and Professors (Ultra Deluxe Platinum Edition)");
         primaryStage.setScene(new Scene(root, 720, 480));
         primaryStage.show();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("canvas.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+//            stage.initModality(Modality.APPLICATION_MODAL);
+//            stage.initStyle(StageStyle.UNDECORATED);
+            stage.setTitle("World View");
+            stage.setScene(new Scene(root1));  
+            stage.show();
+        } catch (Exception e) {
+        	e.printStackTrace(System.out);
+        }
     }
     
 }
