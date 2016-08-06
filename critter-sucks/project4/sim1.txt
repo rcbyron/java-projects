@@ -1,0 +1,10 @@
+show
+step
+make project4.Craig 20
+make project4.Algae 20
+make project4.Jon 5
+make project4.Yale 5
+show
+step 100
+show
+quit

@@ -41,7 +41,7 @@
     </MenuBar>
       <SplitPane dividerPositions="0.7688022284122563" prefHeight="257.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
         <items>
-            <ScrollPane fx:id="scrollPane" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" vbarPolicy="ALWAYS">
+            <ScrollPane fx:id="scrollPane" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="2400.0" prefViewportHeight="449.0" prefViewportWidth="557.0" prefWidth="2400.0" vbarPolicy="ALWAYS">
                <content>
                   <Canvas fx:id="critterCanvas" height="256.0" width="256.0" />
                </content>
