@@ -9,10 +9,21 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project4;
+package project5;
 
 public class Jon extends Critter {
 
+	@Override
+	public CritterShape viewShape() {
+		return CritterShape.TRIANGLE;
+	}
+	
+	@Override
+	public javafx.scene.paint.Color viewColor() { 
+		return javafx.scene.paint.Color.SLATEGREY; 
+	}
+
+	
 	@Override
 	public String toString() { return "J"; }
 	

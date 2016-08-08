@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox prefHeight="480.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project4.CritterWorldController">
+<VBox prefHeight="512.0" prefWidth="714.0" xmlns="http://javafx.com/javafx/8.0.92" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project5.CritterWorldController">
   <children>
     <MenuBar VBox.vgrow="NEVER">
       <menus>
@@ -41,9 +41,13 @@
     </MenuBar>
       <SplitPane dividerPositions="0.7688022284122563" prefHeight="257.0" prefWidth="640.0" VBox.vgrow="ALWAYS">
         <items>
-            <ScrollPane fx:id="scrollPane" hbarPolicy="ALWAYS" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" pannable="true" prefHeight="2400.0" prefViewportHeight="449.0" prefViewportWidth="557.0" prefWidth="2400.0" vbarPolicy="ALWAYS">
+            <ScrollPane fx:id="scrollPane" fitToHeight="true" hbarPolicy="ALWAYS" hvalue="0.5" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minViewportHeight="100.0" minViewportWidth="100.0" pannable="true" prefHeight="449.0" prefViewportHeight="480.0" prefViewportWidth="640.0" prefWidth="640.0" vbarPolicy="ALWAYS" vvalue="0.5">
                <content>
-                  <Canvas fx:id="critterCanvas" height="256.0" width="256.0" />
+                  <BorderPane minHeight="2000.0" minWidth="2000.0">
+                     <center>
+                        <Canvas fx:id="critterCanvas" height="256.0" width="256.0" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
                </content>
             </ScrollPane>
             <ScrollPane fitToHeight="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="449.0" prefWidth="153.0">

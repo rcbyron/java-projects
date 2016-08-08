@@ -9,7 +9,7 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project4;
+package project5;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -59,17 +59,15 @@ public class CritterWorldController implements Initializable {
             critterCanvas.setScaleY(2.0 * (newValue.intValue()/100.0));
             centerNodeInScrollPane(scrollPane, (Node) critterCanvas);
             //scrollPane.setS
-            scrollPane.setMinHeight(2000);
-            scrollPane.setMinWidth(2000);
-//            node.setTranslateX(0 - node.getScene().getWidth()/4);     
-//            node.setTranslateY(0 - node.getScene().getHeight()/4);
+            //node.setTranslateX(node.getScene().getWidth()/4);     
+            //node.setTranslateY(node.getScene().getHeight()/4);
         });
-        critterSelect.getItems().add("project4.Algae");
-        critterSelect.getItems().add("project4.Craig");
-        critterSelect.getItems().add("project4.Jon");
-        critterSelect.getItems().add("project4.Sanjay");
-        critterSelect.getItems().add("project4.Vallath");
-        critterSelect.getItems().add("project4.Yale");
+        critterSelect.getItems().add("project5.Algae");
+        critterSelect.getItems().add("project5.Craig");
+        critterSelect.getItems().add("project5.Jon");
+        critterSelect.getItems().add("project5.Sanjay");
+        critterSelect.getItems().add("project5.Vallath");
+        critterSelect.getItems().add("project5.Yale");
     }
     
     @FXML
@@ -111,7 +109,7 @@ public class CritterWorldController implements Initializable {
     	    public void run(){
     	       doStep();
     	    }
-    	},0,2000);
+    	},0,200);
     }
     
     @FXML
@@ -134,26 +132,28 @@ public class CritterWorldController implements Initializable {
         
         gc.setFill(Color.WHITE);
         gc.fillRect(startX, startY, endX, endY);
+        gc.setLineWidth(1.0);
+
+        for (int x = startX; x <= endX; x += SQ_SIZE) {
+            gc.strokeLine(x, 0, x, (double)endY);
+            //gc.stroke();
+        }
+
+        for (int y = startY; y <= endY; y += SQ_SIZE) {
+            gc.strokeLine(0, y, (double)endX, y);
+            //gc.stroke();
+        }
+        
         for (Critter c : Critter.getPopulation()) {
         	if (c.getX() < 0 || c.getY() < 0) System.out.println(c.getX() + " - " + c.getY());
         	gc.setFill(c.viewColor());
-        	gc.fillRect(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE);
+        	switch(c.viewShape()) {
+        	case CIRCLE: gc.fillOval(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE); break;
+        	default: gc.fillRect(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE); break;
+        	
+        	}
         }
-//        gc.setLineWidth(1.0);
-//
-//        for (int x = startX; x <= endX; x += SQ_SIZE) {
-//            double x1 = x;// + 0.5;
-//            gc.moveTo(x1, startY+1);
-//            gc.lineTo(x1, endY);
-//            gc.stroke();
-//        }
-//
-//        for (int y = startY; y <= endY; y += SQ_SIZE) {
-//        	double y1 = y;// + 0.5;
-//            gc.moveTo(startX+1, y1);
-//            gc.lineTo(endX, y1);
-//            gc.stroke();
-//        }
+
     }
     
 }

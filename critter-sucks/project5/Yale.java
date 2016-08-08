@@ -9,11 +9,16 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project4;
+package project5;
 
 import javafx.scene.paint.Color;
 
 public class Yale extends Critter {
+	
+	@Override
+	public CritterShape viewShape() {
+		return CritterShape.CIRCLE;
+	}
 	
 	@Override
 	public Color viewColor() { return Color.DARKORCHID; }

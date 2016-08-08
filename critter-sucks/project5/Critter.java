@@ -9,7 +9,7 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project4;
+package project5;
 
 import java.awt.Point;
 import java.lang.reflect.Constructor;
@@ -26,6 +26,18 @@ import javafx.scene.paint.Color;
  * no new public, protected or default-package code or data can be added to Critter
  */
 public abstract class Critter {
+	
+	public enum CritterShape {
+		CIRCLE,
+		SQUARE,
+		TRIANGLE,
+		DIAMOND,
+		STAR
+	}
+	
+	public javafx.scene.paint.Color viewOutlineColor() { return viewColor(); }
+	public javafx.scene.paint.Color viewFillColor() { return viewColor(); }
+	public abstract CritterShape viewShape();
 	
 	private static final Point[] dirs = {
 		new Point(1, 0),
@@ -285,9 +297,9 @@ public abstract class Critter {
 	 */
 	private static int openAdjacentPoint(Point p){
 		for (int dir = 0; dir < 16; dir++) {
-	    	int temp_x = (p.x + ((dir+8) / 8)*dirs[dir].x) % Params.world_width;
+	    	int temp_x = (p.x + ((dir+8) / 8)*dirs[dir%8].x) % Params.world_width;
 	    	if (temp_x < 0) temp_x += Params.world_width;
-	    	int temp_y = (p.y + ((dir+8) / 8)*dirs[dir].y) % Params.world_height;
+	    	int temp_y = (p.y + ((dir+8) / 8)*dirs[dir%8].y) % Params.world_height;
 	    	if (temp_y < 0) temp_y += Params.world_height;
 			Point temp_p = new Point(temp_x, temp_y);
 			if (!world.containsKey(temp_p) || world.get(temp_p).size() == 0) { return dir; }
@@ -322,7 +334,7 @@ public abstract class Critter {
 		// Add algae
 		try {
 			for (int i = 0; i < Params.refresh_algae_count; i++)
-				makeCritter("project4.Algae");
+				makeCritter("project5.Algae");
 		} catch (InvalidCritterException e) {
 			e.printStackTrace();
 		}

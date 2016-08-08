@@ -1,4 +1,4 @@
-package project4;
+package project5;
 
 public class Params {
 	public final static int world_width = 80;

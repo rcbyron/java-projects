@@ -1,4 +1,4 @@
-package project4;
+package project5;
 
 public class InvalidCritterException extends Exception {
 	String offending_class;
