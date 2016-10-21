@@ -339,17 +339,18 @@ public abstract class Critter {
 			e.printStackTrace();
 		}
 		
+		// Add babies to population
+		population.addAll(babies);
+		
 		// Remove dead critters
 		Iterator<Critter> iter = population.iterator();
 		while (iter.hasNext()) {
 			Critter bug = iter.next();
 			if (bug.energy <= 0) {
 				iter.remove();
+				System.out.println("REMOVED");
 			}
 		}
-				
-		// Add babies to population
-		population.addAll(babies);
 		
 		// Clear and update critter map
 		for (ArrayList<Critter> spot : world.values())

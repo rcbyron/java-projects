@@ -72,8 +72,7 @@ public class CritterWorldController implements Initializable {
     
     @FXML
     protected void resetWorld() {
-    	//Critter.resetWorld();
-    	canvasController.cool(); 
+    	Critter.resetWorld();
     	System.out.println("Population reset.");
     }
     
@@ -109,7 +108,7 @@ public class CritterWorldController implements Initializable {
     	    public void run(){
     	       doStep();
     	    }
-    	},0,200);
+    	},0,50);
     }
     
     @FXML
@@ -148,8 +147,8 @@ public class CritterWorldController implements Initializable {
         	if (c.getX() < 0 || c.getY() < 0) System.out.println(c.getX() + " - " + c.getY());
         	gc.setFill(c.viewColor());
         	switch(c.viewShape()) {
-        	case CIRCLE: gc.fillOval(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE); break;
-        	default: gc.fillRect(startX + c.getX()*SQ_SIZE, startY+c.getY()*SQ_SIZE, SQ_SIZE, SQ_SIZE); break;
+        	case CIRCLE: gc.fillOval(startX + c.getX()*SQ_SIZE + 1, startY+c.getY()*SQ_SIZE + 1, SQ_SIZE-2, SQ_SIZE-2); break;
+        	default: gc.fillRect(startX + c.getX()*SQ_SIZE + 1, startY+c.getY()*SQ_SIZE + 1, SQ_SIZE-2, SQ_SIZE-2); break;
         	
         	}
         }

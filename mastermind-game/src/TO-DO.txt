@@ -1,6 +1,0 @@
-- UML Diagram
-- Add a check to see if the user won or ran out of guesses
-    - User won if 4 black pegs are found
-    - User lost if he/she ran out of guesses
-- Clean up code and comment it
-- Check everything against the rubric
