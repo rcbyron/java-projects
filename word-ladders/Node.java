@@ -1,4 +1,3 @@
-package assignment3;
 
 import java.util.Collection;
 //import java.util.Set;

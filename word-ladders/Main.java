@@ -10,8 +10,6 @@
  * Fall 2015
  */
 
-package assignment3;
-
 import java.util.*;
 import java.io.*;
 
@@ -253,9 +251,9 @@ public class Main {
 		Set<String> words = new HashSet<String>();
 		Scanner infile = null;
 		try {
-			infile = new Scanner(new File("assignment3/five_letter_words.txt"));
+			infile = new Scanner(new File("five_letter_words.txt"));
 		} catch (FileNotFoundException e) {
-			System.out.println("Dictionary File not Found looking for assignment3/five_letter_words.txt. Make sure assignment3 is in the classpath!");
+			System.out.println("Dictionary File not Found looking for five_letter_words.txt. Make sure it is in the classpath!");
 			e.printStackTrace();
 			System.exit(1);
 		}

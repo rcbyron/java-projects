@@ -1,4 +1,3 @@
-package project5;
 
 import javafx.scene.paint.Color;
 import project5.Critter.TestCritter;

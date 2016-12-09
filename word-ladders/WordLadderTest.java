@@ -1,7 +1,6 @@
 /** Phase A <studentA EID><studentB EID>
  * Phase B <studentB EID><studentA EID>
  */
-package assignment3;
 
 import static org.junit.Assert.assertEquals;
 

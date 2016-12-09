@@ -1,0 +1,1 @@
+sudo lsof -t -i tcp:8080 | xargs kill -9
