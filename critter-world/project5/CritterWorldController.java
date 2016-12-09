@@ -1,3 +1,4 @@
+package project5;
 /* CRITTERS CritterWorldController.java
  * EE422C Project 4 submission by
  * Robert (Connor) Byron
@@ -9,7 +10,6 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project5;
 
 import java.net.URL;
 import java.util.ResourceBundle;

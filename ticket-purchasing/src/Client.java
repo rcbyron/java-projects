@@ -7,8 +7,6 @@
  * Summer 2016
  */
 
-package assignment5;
-
 public class Client implements Comparable<Client> {
 
 	private String name;

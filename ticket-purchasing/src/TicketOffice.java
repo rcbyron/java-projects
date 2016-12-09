@@ -7,8 +7,6 @@
  * Summer 2016
  */
 
-package assignment5;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -46,7 +44,7 @@ public class TicketOffice extends Thread {
 	 *              then markAvailableSeatTaken(Seat)
 	 *              printTicketSeat(Seat)
 	 *          Else 
-	 *              Output to the screen “Sorry, we are sold out.”
+	 *              Output to the screen ï¿½Sorry, we are sold out.ï¿½
 	 *     End repeat
 	 */
 	@Override public void run() {

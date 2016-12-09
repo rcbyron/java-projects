@@ -1,3 +1,4 @@
+package project5;
 /* CRITTERS Jon.java
  * EE422C Project 4 submission by
  * Robert (Connor) Byron
@@ -9,7 +10,6 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project5;
 
 public class Jon extends Critter {
 

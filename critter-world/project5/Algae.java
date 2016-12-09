@@ -1,8 +1,8 @@
+package project5;
 
 import javafx.scene.paint.Color;
-import project5.Critter.TestCritter;
 
-public class Algae extends TestCritter {
+public class Algae extends Critter.TestCritter {
 
 	@Override
 	public CritterShape viewShape() {

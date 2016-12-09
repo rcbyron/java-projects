@@ -6,7 +6,6 @@
  * Slip days used: 1
  * Summer 2016
  */
-package assignment5;
 
 import java.util.ArrayList;
 import java.util.List;

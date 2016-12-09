@@ -1,3 +1,4 @@
+package project5;
 /* CRITTERS Main.java
  * EE422C Project 4 submission by
  * Robert (Connor) Byron
@@ -9,7 +10,6 @@
  * Slip days used: 1
  * Spring 2016
  */
-package project5;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +25,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("world.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("../world.fxml"));
         primaryStage.setTitle("Critter World 3000: A Tale of Electrical Engineering Pupils and Professors (Ultra Deluxe Platinum Edition)");
         primaryStage.setScene(new Scene(root, 720, 480));
         primaryStage.show();

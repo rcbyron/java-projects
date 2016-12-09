@@ -7,8 +7,6 @@
  * Summer 2016
  */
 
-package assignment1;
-
 import java.util.Arrays;
 
 public class SortTools {
